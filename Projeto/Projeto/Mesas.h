@@ -17,5 +17,5 @@ struct refeição
 
 refeição* novaMeal();
 string* escreveMeal(refeição *r);
-mesa criaMesas(short *vtm);
+mesa criaMesas(short *vtamMesas);
 short* criaCantina();

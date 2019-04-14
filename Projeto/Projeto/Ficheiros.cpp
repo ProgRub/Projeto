@@ -57,6 +57,10 @@ void escreveFicheiro(string *output,short tamanho, bool primeiraVez) { // vai es
 	}
 }
 
-void limpaVazios(short*array, short limite) {
-
+short* copiaVetor(short* aux, short tamanho) {
+	short *vetor = new short[tamanho];
+	for (int*i = new int(0); *i < tamanho; (*i)++) {
+		vetor[*i] = aux[*i];
+	}
+	return vetor;
 }
