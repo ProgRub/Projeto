@@ -19,6 +19,7 @@ int main() {
 	guardaFicheiros(UNOMES, "ultimo_nome.txt");
 	string *CURSOS = new string[numLinhas("cursos.txt")];
 	guardaFicheiros(CURSOS, "cursos.txt");
+	criaGrupo(PNOMES, UNOMES, CURSOS, 1);
 	system("pause");/*
 	char opcao;
 	bool sair = false;
