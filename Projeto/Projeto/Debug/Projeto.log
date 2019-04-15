@@ -1,8 +1,3 @@
 ﻿  Main.cpp
 c:\users\35196\desktop\onedrive - universidade da madeira\universidade\2º semestre\eda\projeto\projeto\projeto\main.cpp(12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-  Mesas.cpp
-  Pessoas.cpp
-c:\users\35196\desktop\onedrive - universidade da madeira\universidade\2º semestre\eda\projeto\projeto\projeto\pessoas.cpp(17): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-c:\users\35196\desktop\onedrive - universidade da madeira\universidade\2º semestre\eda\projeto\projeto\projeto\pessoas.cpp(33): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-  Generating Code...
   Projeto.vcxproj -> C:\Users\35196\Desktop\OneDrive - Universidade da Madeira\Universidade\2º Semestre\EDA\Projeto\Projeto\Debug\Projeto.exe

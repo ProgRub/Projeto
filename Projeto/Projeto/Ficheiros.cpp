@@ -69,9 +69,3 @@ short comprimentoVetor(short*vetor) {
 	short *length = new short(sizeof(*vetor) / sizeof(vetor[0]));
 	return *length;
 }
-
-void imprimeDados(short* v, short tam) {
-	for (int i = 0; i < tam; i++) {
-		cout << v[i] << endl;
-	}
-}

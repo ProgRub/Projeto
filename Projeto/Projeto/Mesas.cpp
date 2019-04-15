@@ -32,7 +32,7 @@ string* escreveMeal(refeição *r) {//escreve a refeição atual, retorna um array d
 	return FIM;
 }
 
-short* criaCantina() {//vai obter o tamanho da cantina e gerar tamanhos de mesas até a cantina estar preenchida, tamanhos guardados num vetor
+void criaCantina() {//vai obter o tamanho da cantina e gerar tamanhos de mesas até a cantina estar preenchida, tamanhos guardados num vetor
 	short *TCANTINA = new short(rand() % 21 + 30);
 	short *t = new short();
 	short *aux = new short[25];
@@ -48,35 +48,33 @@ short* criaCantina() {//vai obter o tamanho da cantina e gerar tamanhos de mesas
 		delete TMESA;
 	}
 	short *vtamMesas = copiaVetor(aux, *itera);
+	criaMesas(vtamMesas, *itera);
 	delete itera, TCANTINA, t;
 	delete[]aux;
-	return vtamMesas;
 }
 
-mesa* criaMesas(short *vtamMesas) {//vai criar as mesas da cantina com o vetor que contem os tamanhos das mesas obtidos em criaCantina
-	mesa *m = new mesa();
-	short *num = new short(1);
+mesa* criaMesas(short *vtamMesas, short tam) {//vai criar as mesas da cantina com o vetor que contem os tamanhos das mesas obtidos em criaCantina
 	short *itera = new short(0);
-	short *n = new short(comprimentoVetor(vtamMesas));
-	mesa* vMesas = new mesa[*n];
-	while (*itera < *n) {
+	mesa* vMesas = new mesa[tam];
+	short *num = new short(1);
+	while (*itera < tam) {
+		mesa *m = new mesa();
 		m->numMesa = *num;
+		(*num)++;
 		m->tamanho = vtamMesas[*itera];
-		pessoa *sit = new pessoa[*itera];
+		pessoa *sit = new pessoa[vtamMesas[*itera]];
 		m->sentados = sit;
-		guardaVetorMesas(m,vMesas, *n);
+		guardaVetorMesas(m,vMesas, *itera);
 		(*itera)++;
 	}
 	return vMesas;
 }
 
-void guardaVetorMesas(mesa* m, mesa* vetor, short tam) {
-	short*i = new short(0);
-	for (*i; *i < tam; (*i)++) {
-		vetor[*i] = *m;
-	}
+void guardaVetorMesas(mesa* m, mesa* vetor, short pos) {
+	vetor[pos] = *m;
+	escreveMesa(m);
 }
 
-void escreveMesa(mesa * m) {
+void escreveMesa(mesa* m) {
 	cout << "Mesa " << m->numMesa << "(CAPACIDADE " << m->tamanho << "):\n";
 }

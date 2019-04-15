@@ -23,12 +23,14 @@ struct pessoa
 	short duração;
 };
 
-struct grupo {
+/*struct grupo {
 	short num;
 	pessoa *lista;
 	short tam;
 };
+grupo *gru;
 
-grupo * criaGrupo(string *pnomes, string *unomes, string *cursos, short ngrupo);
-pessoa * criaAluno(pessoa *p, string pnome, string unome, string curso);
-pessoa * criaStaff(pessoa *p, string pnome, string unome);
+void criaGrupo(string *pnomes, string *unomes, string *cursos, short ngrupo);
+void criaAluno(pessoa *p, string pnome, string unome, string curso);
+void  criaStaff(pessoa *p, string pnome, string unome);/*
+void  escrevePessoa(pessoa * p);*/
