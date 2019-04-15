@@ -7,3 +7,4 @@ short numLinhas(string nome_ficheiro);
 void escreveFicheiro(string *output,short tamanho, bool primeiraVez);
 short* copiaVetor(short* aux, short tamanho);
 short comprimentoVetor(short*vetor);
+void imprimeDados(short* v, short tam);

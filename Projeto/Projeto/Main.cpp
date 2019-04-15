@@ -19,6 +19,7 @@ int main() {
 	guardaFicheiros(UNOMES, "ultimo_nome.txt");
 	string *CURSOS = new string[numLinhas("cursos.txt")];
 	guardaFicheiros(CURSOS, "cursos.txt");
+	criaPessoas(PNOMES, UNOMES, CURSOS);
 	system("pause");
 	return 0;
 }

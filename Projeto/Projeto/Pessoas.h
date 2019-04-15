@@ -18,9 +18,10 @@ struct pessoa
 	string priNome;
 	string ultNome;
 	float plafond;
+	pessoa* grupo;
 	aluno *membro_aluno;
 	staff *membro_staff;
 	short duração;
 };
 
-pessoa* criaPessoa(string* pnomes, string* unomes, string* cursos);
+pessoa* criaPessoas(string* pnomes, string* unomes, string* cursos);
