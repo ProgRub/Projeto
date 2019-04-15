@@ -6,23 +6,47 @@
 #include<fstream>
 using namespace std;
 
-pessoa* criaPessoa(string* pnomes , string* unomes , string* cursos ) {
-	pessoa* p = new pessoa();
-	float *PLAF = new float(rand() % 100 + 1);
-	short *RETIRAPNOME = new short(rand() % numLinhas("primeiro_nome.txt"));
-	short *RETIRAUNOME = new short(rand() % numLinhas("ultimo_nome.txt"));
-	short *RETIRACURSO = new short(rand() % numLinhas("cursos.txt"));
+grupo * criaGrupo(string *pnomes, string *unomes, string *cursos, short ngrupo) {
+	grupo *g = new grupo();
+	short *TAMANHO = new short(rand() % 10 + 1);
+	pessoa * l = new pessoa[*TAMANHO];
 	short *ALUNOouSTAFF = new short(rand() % 2 + 1);
-	short *DURAÇÃOMEAL = new short(rand() % 4 + 2);
-	p->plafond = *PLAF;
-	p->duração = *DURAÇÃOMEAL;
+	short *i = new short(0);
 	if (*ALUNOouSTAFF == 1) {
-		criaAluno(p, pnomes[*RETIRAPNOME],pnomes[*RETIRAUNOME],pnomes[*RETIRACURSO]);
+		pessoa* p = new pessoa();
+		float *PLAF = new float(rand() % 100 + 1);
+		short *DURAÇÃOMEAL = new short(rand() % 4 + 2);
+		p->plafond = *PLAF;
+		p->duração = *DURAÇÃOMEAL;
+		short *RETIRACURSO = new short(rand() % numLinhas("cursos.txt"));
+		while (*i < *TAMANHO) {
+			short *RETIRAPNOME = new short(rand() % numLinhas("primeiro_nome.txt"));
+			short *RETIRAUNOME = new short(rand() % numLinhas("ultimo_nome.txt"));
+			criaAluno(p, pnomes[*RETIRAPNOME], pnomes[*RETIRAUNOME], pnomes[*RETIRACURSO]);
+			l[*i] = *p;
+			delete RETIRAPNOME, RETIRAUNOME;
+		}
+		delete PLAF, DURAÇÃOMEAL, RETIRACURSO, p;
 	}
 	else {
-		criaStaff(p, pnomes[*RETIRAPNOME], pnomes[*RETIRAUNOME]);
+		pessoa* p = new pessoa();
+		float *PLAF = new float(rand() % 100 + 1);
+		short *DURAÇÃOMEAL = new short(rand() % 4 + 2);
+		p->plafond = *PLAF;
+		p->duração = *DURAÇÃOMEAL;
+		while (*i < *TAMANHO) {
+			short *RETIRAPNOME = new short(rand() % numLinhas("primeiro_nome.txt"));
+			short *RETIRAUNOME = new short(rand() % numLinhas("ultimo_nome.txt"));
+			criaStaff(p, pnomes[*RETIRAPNOME], pnomes[*RETIRAUNOME]);
+			l[*i] = *p;
+			delete RETIRAPNOME, RETIRAUNOME;
+		}
+		delete PLAF, DURAÇÃOMEAL, p;
 	}
-	return p;
+	g->num = ngrupo;
+	g->tam = *TAMANHO;
+	g->lista = l;
+	return g;
 }
 
 pessoa * criaAluno(pessoa * p,string pnome, string unome, string curso) {
@@ -38,6 +62,7 @@ pessoa * criaAluno(pessoa * p,string pnome, string unome, string curso) {
 	else {
 		p->membro_aluno->especialOuNao = false;
 	}
+	return p;
 }
 
 pessoa * criaStaff(pessoa * p, string pnome, string unome) {
@@ -48,4 +73,5 @@ pessoa * criaStaff(pessoa * p, string pnome, string unome) {
 	p->membro_staff = s;
 	p->membro_staff->numDepartamento = *GRUPOIDDEPART;
 	p->membro_staff->numFuncionario = *NUMSTAFF;
+	return p;
 }
