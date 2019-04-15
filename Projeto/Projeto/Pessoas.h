@@ -13,23 +13,16 @@ struct pessoa
 	struct staff
 	{
 		int numFuncionario;
-		short numDepartamento;
 	};
 	string priNome;
 	string ultNome;
+	short numDepartamentoOuGrupo;
 	float plafond;
 	aluno membro_aluno;
 	staff membro_staff;
 	short duração;
 };
 
-struct grupo {
-	short num;
-	pessoa *lista;
-	short tam;
-};
-
 pessoa* criaPessoa(string *pnomes, string *unomes, string cursos, short dura, bool alunoOuNao, bool especialOuNao);
-grupo* criaGrupo(string *pnomes, string *unomes, string*cursos, short n);
-void preencherGrupo(string *pnomes, string *unomes, string*cursos, grupo*g);
+pessoa* criaGrupo(string *pnomes, string *unomes, string*cursos, short n);
 void escrevePessoa(pessoa *p);
