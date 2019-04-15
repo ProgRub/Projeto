@@ -11,7 +11,6 @@ int main() {
 	locale::global(locale(""));
 	srand(time(NULL));
 	pessoa * fila = new pessoa[50];
-	short *DURAÇÃOMEAL = new short(rand() % 4 + 2);
 	short *CAPGRUPO = new short(rand() % 10 + 1);
 	cout << "\t\t\t\t\t Cantina EDA\n";
 	string *PNOMES = new string[numLinhas("primeiro_nome.txt")];
@@ -20,8 +19,6 @@ int main() {
 	guardaFicheiros(UNOMES, "ultimo_nome.txt");
 	string *CURSOS = new string[numLinhas("cursos.txt")];
 	guardaFicheiros(CURSOS, "cursos.txt");
-	mesa* v = new mesa[20];
-	v = criaMesas(criaCantina());
 	system("pause");
 	return 0;
 }

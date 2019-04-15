@@ -20,4 +20,7 @@ struct pessoa
 	float plafond;
 	aluno *membro_aluno;
 	staff *membro_staff;
+	short duração;
 };
+
+pessoa* criaPessoa(string* pnomes, string* unomes, string* cursos);
