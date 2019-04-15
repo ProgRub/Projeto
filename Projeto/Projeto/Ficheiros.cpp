@@ -33,7 +33,7 @@ short numLinhas(string nome_ficheiro) {//vai contar o nº de linhas de um ficheir
 }
 
 void escreveFicheiro(string *output,short tamanho, bool primeiraVez) { // vai escrever no ficheiro "cantina.txt" o vetor de strings que recebe como argumento
-	if (!primeiraVez) {
+	if (!primeiraVez) {// se primeira vez for false, usa-se o append para não apagar o que já estava escrito no ficheiro
 		fstream ficheiro("cantina.txt", ios::out | ios::app);
 		short*i = new short(0);
 		if (ficheiro.is_open()) {
@@ -44,7 +44,7 @@ void escreveFicheiro(string *output,short tamanho, bool primeiraVez) { // vai es
 		ficheiro.close();
 		delete i;
 	}
-	else {
+	else {//se primeira vez for true, apaga o que estava anteriormente escrito e escreve desde o início do ficheiro
 		fstream ficheiro("cantina.txt", ios::out);
 		short*i = new short(0);
 		if (ficheiro.is_open()) {
@@ -57,10 +57,15 @@ void escreveFicheiro(string *output,short tamanho, bool primeiraVez) { // vai es
 	}
 }
 
-short* copiaVetor(short* aux, short tamanho) {
+short* copiaVetor(short* aux, short tamanho) {// esta função evitará a existência de arrays com espaços vazios
 	short *vetor = new short[tamanho];
 	for (int*i = new int(0); *i < tamanho; (*i)++) {
 		vetor[*i] = aux[*i];
 	}
 	return vetor;
+}
+
+short comprimentoVetor(short*vetor) {
+	short *length = new short(sizeof(*vetor) / sizeof(vetor[0]));
+	return *length;
 }

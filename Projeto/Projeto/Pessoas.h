@@ -12,10 +12,12 @@ struct pessoa
 	};
 	struct staff
 	{
-		int numFuncionario;
+		short numFuncionario;
 		short numDepartamento;
 	};
 	string priNome;
 	string ultNome;
 	float plafond;
+	aluno *membro_aluno;
+	staff *membro_staff;
 };

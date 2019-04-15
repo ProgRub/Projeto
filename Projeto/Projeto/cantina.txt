@@ -1,1 +1,4 @@
-teste3
+Refeição atual:
+	Entrada: Sopa
+	Prato Principal: Frango
+	Custo:4.200000€

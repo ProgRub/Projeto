@@ -4,8 +4,8 @@
 using namespace std;
 struct mesa
 {
-	int tamanho;
-	int numMesa;
+	short numMesa;
+	short tamanho;
 	pessoa *sentados;
 };
 struct refeição
@@ -17,5 +17,6 @@ struct refeição
 
 refeição* novaMeal();
 string* escreveMeal(refeição *r);
-mesa criaMesas(short *vtamMesas);
+mesa* criaMesas(short *vtamMesas);
 short* criaCantina();
+void guardaVetorMesas(mesa* m, mesa* vetor, short tam);
