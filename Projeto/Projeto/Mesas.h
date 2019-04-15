@@ -20,3 +20,4 @@ string* escreveMeal(refeição *r);
 mesa* criaMesas(short *vtamMesas);
 short* criaCantina();
 void guardaVetorMesas(mesa* m, mesa* vetor, short tam);
+void escreveMesa(mesa *m);

@@ -76,3 +76,7 @@ void guardaVetorMesas(mesa* m, mesa* vetor, short tam) {
 		vetor[*i] = *m;
 	}
 }
+
+void escreveMesa(mesa * m) {
+	cout << "Mesa " << m->numMesa << "(CAPACIDADE " << m->tamanho << "):\n";
+}
