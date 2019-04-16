@@ -10,7 +10,7 @@ using namespace std;
 int main() {
 	locale::global(locale(""));
 	srand(time(NULL));
-	pessoa * fila = new pessoa[50];
+	pessoa ** fila = new pessoa*[50];
 	short *CAPGRUPO = new short(rand() % 10 + 1);
 	cout << "\t\t\t\t\t Cantina EDA\n";
 	string *PNOMES = new string[numLinhas("primeiro_nome.txt")];
@@ -19,12 +19,17 @@ int main() {
 	guardaFicheiros(UNOMES, "ultimo_nome.txt");
 	string *CURSOS = new string[numLinhas("cursos.txt")];
 	guardaFicheiros(CURSOS, "cursos.txt");
-	short*i = new short(0);
-	preencheFila(fila, PNOMES, UNOMES, CURSOS,i);
-	escreveFila(fila);
-	mesa*v = criaCantina();
-	escreveMesa(v[0]);
+	pessoa **g = criaGrupo(PNOMES, UNOMES, CURSOS);
+	//escrevePessoa(g[0]);
+	//preencheFila(fila, PNOMES, UNOMES, CURSOS); 
 	/*
+	escreveFila(fila);
+	
+	mesa*v = criaCantina();
+	preencheMesa(v[0],fila);
+	escreveMesa(v[0]);
+	escreveFila(fila);
+	
 	char opcao;
 	bool sair = false;
 	while (!sair) {

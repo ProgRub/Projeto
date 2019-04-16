@@ -25,8 +25,10 @@ struct pessoa
 };
 
 pessoa* criaPessoa(string *pnomes, string *unomes, string cursos, short dura, bool alunoOuNao, bool especialOuNao); 
-pessoa* criaGrupo(string *pnomes, string *unomes, string*cursos);
-void escrevePessoa(pessoa p); 
-pessoa* preencheFila(pessoa*fila, string* pnomes, string*unomes, string*cursos, short*i);
-void escreveFila(pessoa*fila);
-void preencheMesa(mesa m, pessoa p);
+pessoa** criaGrupo(string *pnomes, string *unomes, string*cursos);
+void escrevePessoa(pessoa *p); 
+pessoa** preencheFila(pessoa**fila, string* pnomes, string*unomes, string*cursos);
+void escreveFila(pessoa**fila);
+void alterarPlafond(int n, pessoa**fila);
+void removePobres(pessoa *fila, refeição *r);
+void ordenaAlfabeto(mesa* cantina, pessoa* fila);

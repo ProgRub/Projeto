@@ -7,8 +7,8 @@ mover alunos/staff da fila para a cantina, prioridade especiais - ?
 gerar novos alunos/staff para fila - ?
 alteração refeições - feito
 escrita refeições - feito
-escrita alunos/staff - ?
-escrita mesas - ?
+escrita alunos/staff - feito
+escrita mesas - feito
 nº de grupo ou departamento não repetem - ?
 mesmo grupo mesma mesa - ?
 cursos diferentes, nunca mesma mesa - ?
@@ -17,6 +17,5 @@ carregamento dados para continuar execução - ?
 aluno/staff/grupo ter que sair a meio da refeição - ?
 sem dinheiro suficiente não entra, remove aluno/staff ou grupo/departamento todo - ?
 alunos/staff removidos guardados (max 100) - ?
-alterar plafond de pessoa na fila, através de id ou nºo de aluno - ?
-mostrar todos os individuos no sistema - ?
+alterar plafond de pessoa na fila, através de id ou nºo de aluno - 
 mostrar todos os individuos no sistema ordenados alfabeticamente ultimo nome - ?

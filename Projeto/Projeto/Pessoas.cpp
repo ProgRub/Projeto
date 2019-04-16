@@ -7,7 +7,7 @@
 using namespace std;
 
 pessoa* criaPessoa(string *pnomes, string *unomes, string curso, short dura, bool alunoOuNao, bool especialOuNao) {
-	pessoa *p = new pessoa();
+	pessoa *p = new pessoa;
 	int *NUMALUNO = new int((20 * 100000) + ((rand() % 999 + 1) * 100) + (rand() % 7 + 12));
 	int *NUMSTAFF = new int((19 * 100000) + ((rand() % 999 + 1) * 100) + (rand() % 31 + 70));
 	short *RETIRAPNOME = new short(rand() % 44);
@@ -29,7 +29,7 @@ pessoa* criaPessoa(string *pnomes, string *unomes, string curso, short dura, boo
 	return p;
 }
 
-pessoa* criaGrupo(string *pnomes, string *unomes, string*cursos) {
+pessoa** criaGrupo(string *pnomes, string *unomes, string*cursos) {
 	short *RETIRACURSO = new short(rand() % 19);
 	short *DURAÇÃOMEAL = new short(rand() % 4 + 2);
 	bool *alea = new bool(rand() % 2);
@@ -42,34 +42,29 @@ pessoa* criaGrupo(string *pnomes, string *unomes, string*cursos) {
 		*esp = false;
 	}
 	if (*esp) {
-		pessoa *k = new pessoa[1];
+		pessoa **k = new pessoa*[1];
 		pessoa *p = criaPessoa(pnomes, unomes, cursos[*RETIRACURSO], *DURAÇÃOMEAL, true, *esp);
-		short *GRUPOIDDEPART = new short(rand() % 401 + 100);/*
-		if (!testaIDDepartamento(*GRUPOIDDEPART, res, iterato)) {
-			*GRUPOIDDEPART =(rand() % 401 + 100);
-		}*/
+		short *GRUPOIDDEPART = new short(rand() % 401 + 100);
 		p->numDepartamentoOuGrupo = *GRUPOIDDEPART;
 		p->tamanho = 1;
-		k[0] = *p;
+		k[0] = p;
 		delete p;
 		return k;
 	}
 	else {
 		short *TAMANHO = new short(rand() % 10 + 1);
-		pessoa *l = new pessoa[*TAMANHO];
+		pessoa **l = new pessoa*[*TAMANHO];
 		short *itera = new short(0);
-		short *GRUPOIDDEPART = new short(rand() % 401 + 100);/*
-		if (!testaIDDepartamento(*GRUPOIDDEPART, res, iterato)) {
-			*GRUPOIDDEPART = (rand() % 401 + 100);
-		}*/
+		short *GRUPOIDDEPART = new short(rand() % 401 + 100);
 		for (*itera; *itera < *TAMANHO; (*itera)++) {
 			pessoa*p = criaPessoa(pnomes, unomes, cursos[*RETIRACURSO], *DURAÇÃOMEAL, *alea, *esp);
 			p->numDepartamentoOuGrupo = *GRUPOIDDEPART;
 			if (*itera == 0) {
 				p->tamanho = *TAMANHO;
 			}
-			l[*itera] = *p;
-			delete p;
+			l[*itera] = p;
+			escrevePessoa(l[*itera]);
+			escrevePessoa(l[0]);
 		}
 		delete TAMANHO, itera;
 		return l;
@@ -77,38 +72,77 @@ pessoa* criaGrupo(string *pnomes, string *unomes, string*cursos) {
 	delete RETIRACURSO, esp;
 }
 
+void escrevePessoa(pessoa *p) {
+	if (p->membro_aluno.num > 0) {
+		if (!p->membro_aluno.especialOuNao) {
+			cout << p->priNome << " " << p->ultNome << ", Estudante, Grupo " << p->numDepartamentoOuGrupo << ", " << p->membro_aluno.curso << ", " << p->membro_aluno.num << ", duração " << p->duração << ", " << p->plafond << "€\n";
+		}
+		else {
+			cout << p->priNome << " " << p->ultNome << ", Estudante (especial), Grupo " << p->numDepartamentoOuGrupo << ", " << p->membro_aluno.curso << ", " << p->membro_aluno.num<< ", duração " << p->duração << ", " << p->plafond << "€\n";
+		}
+	}
+	else {
+		cout << p->priNome << " " << p->ultNome << ", Staff, Departamento " << p->numDepartamentoOuGrupo << ", " << p->membro_staff.numFuncionario << ", duração " << p->duração << ", " << p->plafond << "€\n";
+	}
+}
+/*
 void escrevePessoa(pessoa p) {
 	if ((&p)->membro_aluno.num > 0) {
 		if (!(&p)->membro_aluno.especialOuNao) {
-			cout << (&p)->priNome << " " << (&p)->ultNome << ", Estudante, Grupo " << (&p)->numDepartamentoOuGrupo << ", " << (&p)->membro_aluno.curso << " , duração " << (&p)->duração << ", " << (&p)->plafond << "€\n";
+			cout << (&p)->priNome << " " << (&p)->ultNome << ", Estudante, Grupo " << (&p)->numDepartamentoOuGrupo << ", " << (&p)->membro_aluno.curso << ", " << (&p)->membro_aluno.num << ", duração " << (&p)->duração << ", " << (&p)->plafond << "€\n";
 		}
 		else {
-			cout << (&p)->priNome << " " << (&p)->ultNome << ", Estudante (especial), Grupo " << (&p)->numDepartamentoOuGrupo << ", " << (&p)->membro_aluno.curso << " , duração " << (&p)->duração << ", " << (&p)->plafond << "€\n";
+			cout << (&p)->priNome << " " << (&p)->ultNome << ", Estudante (especial), Grupo " << (&p)->numDepartamentoOuGrupo << ", " << (&p)->membro_aluno.curso << ", " << (&p)->membro_aluno.num << ", duração " << (&p)->duração << ", " << (&p)->plafond << "€\n";
 		}
 	}
 	else {
 		cout << (&p)->priNome << " " << (&p)->ultNome << ", Staff, Departamento " << (&p)->numDepartamentoOuGrupo << ", " << (&p)->membro_staff.numFuncionario << ", duração " << (&p)->duração << ", " << (&p)->plafond << "€\n";
 	}
-}
-pessoa* preencheFila(pessoa*fila, string* pnomes, string*unomes, string*cursos,short*i) {
+}*/
+
+pessoa** preencheFila(pessoa**fila, string* pnomes, string*unomes, string*cursos) {
+	short*i = new short(0);
 	short*j = new short(0);
-	pessoa*g = criaGrupo(pnomes, unomes, cursos);
-	short*tam = new short(g[0].tamanho);
+	pessoa**g = criaGrupo(pnomes, unomes, cursos);
+	short*tam = new short(g[0]->tamanho);
 	while(*i<50) {
-		for(*j=0;*j<*tam;(*j)++){
-			fila[*i] = g[(*j)];
+		if (*j < *tam) {
+			fila[(*i)] = g[(*j)];
+			(*j)++;
 		}
-		g = criaGrupo(pnomes, unomes, cursos);
-		*tam = g[0].tamanho;
+		else {
+			g = criaGrupo(pnomes, unomes, cursos);
+			*tam = g[0]->tamanho;
+			*j = 0;
+		}
 		(*i)++;
 	}
 	delete i, j;
 	return fila;
 }
 
-void escreveFila(pessoa*fila) {
+void escreveFila(pessoa**fila) {
 	short*i = new short(0);
 	while (*i < 50) {
-		escrevePessoa(fila[(*i)++]);
+		escrevePessoa(fila[(*i)]);
+		(*i)++;
+	}
+}
+
+void alterarPlafond(int n, pessoa**fila) {
+	short i = 0;
+	if (fila->membro_aluno.num > 0) {
+		cout << "Plafond inicial: " << fila->plafond << "€" << endl;
+		cout << "Insira um novo plafond: ";
+		cin >> fila->plafond;
+		cout << "Plafond atual: " << fila->plafond << "€" << endl;
+		cout << fila->membro_aluno.num;
+	}
+	else {
+		cout << "Plafond inicial: " << fila->plafond << "€" << endl;
+		cout << "Insira um novo plafond: ";
+		cin >> fila->plafond;
+		cout << "Plafond atual: " << fila->plafond << "€" << endl;
+		cout << fila->membro_staff.numFuncionario;
 	}
 }

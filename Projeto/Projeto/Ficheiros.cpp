@@ -64,8 +64,3 @@ short* copiaVetor(short* aux, short tamanho) {// esta função evitará a existênci
 	}
 	return vetor;
 }
-
-short comprimentoVetor(short*vetor) {
-	short *length = new short(sizeof(*vetor) / sizeof(vetor[0]));
-	return *length;
-}
