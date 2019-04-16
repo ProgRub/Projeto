@@ -19,8 +19,12 @@ int main() {
 	guardaFicheiros(UNOMES, "ultimo_nome.txt");
 	string *CURSOS = new string[numLinhas("cursos.txt")];
 	guardaFicheiros(CURSOS, "cursos.txt");
-	criaGrupo(PNOMES, UNOMES, CURSOS, 1);
-	system("pause");/*
+	short*i = new short(0);
+	preencheFila(fila, PNOMES, UNOMES, CURSOS,i);
+	escreveFila(fila);
+	mesa*v = criaCantina();
+	escreveMesa(v[0]);
+	/*
 	char opcao;
 	bool sair = false;
 	while (!sair) {
@@ -33,11 +37,13 @@ int main() {
 		cin >> opcao;
 		cout << endl;
 		switch (opcao) {
-		case ('s'):
+		case 's':
 			cout << " Escolheu Seguinte \n";
 			//linha para fazer a subtraçao do ciclo do tempo de cada refeicao na cantina
 			break;
-		case ('e'):
+		}
+	
+		case 'e':
 			char opcao1;//opcao dentro da emergencia para escolher entre grupo ou aluno a abandonar
 			cout << " Escolheu Emergência \n";
 			cout << " Escolha a opção:\n1 - Remover Aluno/Funcionário\n2 - Remover Grupo/departamento \n";
@@ -58,14 +64,14 @@ int main() {
 				linha para inserir novo grupo na cantina para preencher
 				break;
 			}
-		case ('g'):
+		case 'g':
 			cout << " Escolheu Gravar \n";
 			escreveFicheiro;
 			break;
-		case ('c'):
+		case 'c':
 			cout << " Escolheu Carregar Dados \n";
 			break;
-		case ('o'):
+		case 'o':
 			int opcao2 = 0;
 			cout << " Escolheu Opções \n";
 			cout << " Escolha a opção: \n1 - Mostrar todos os indivíduos do sistema\n2 - Mostrar todas as mesas\n3 - Mostrar todos os indivíduos rejeitados por falta de plafond\n4 - Alterar o plafond do indivíduo enquanto este está na fila\n5 - Apresentação dos indivíduos de um determinado departamento\n6 - Editar a duração da refeição de um grupo/departamento\n7 - Pesquisa de indivíduos com base no seu id\n8 - Editar nome de um indivíduo\n ";
@@ -98,5 +104,6 @@ int main() {
 			}
 		}
 	}*/
+	system("pause");
 	return 0;
 }

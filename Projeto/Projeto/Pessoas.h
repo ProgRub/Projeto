@@ -17,12 +17,16 @@ struct pessoa
 	string priNome;
 	string ultNome;
 	short numDepartamentoOuGrupo;
+	short tamanho;
 	float plafond;
 	aluno membro_aluno;
 	staff membro_staff;
 	short duração;
 };
 
-pessoa* criaPessoa(string *pnomes, string *unomes, string cursos, short dura, bool alunoOuNao, bool especialOuNao);
-pessoa* criaGrupo(string *pnomes, string *unomes, string*cursos, short n);
-void escrevePessoa(pessoa *p);
+pessoa* criaPessoa(string *pnomes, string *unomes, string cursos, short dura, bool alunoOuNao, bool especialOuNao); 
+pessoa* criaGrupo(string *pnomes, string *unomes, string*cursos);
+void escrevePessoa(pessoa p); 
+pessoa* preencheFila(pessoa*fila, string* pnomes, string*unomes, string*cursos, short*i);
+void escreveFila(pessoa*fila);
+void preencheMesa(mesa m, pessoa p);
