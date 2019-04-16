@@ -101,3 +101,36 @@ void testeMesas(mesa *m,pessoa *p) { //verifica as mesas pra ver se tem cursos d
 	}
 	cout << funciona << endl;
 }
+
+void removePobres(pessoa *fila, refeição *r) { // averigua se o aluno/funcionário possui Plafond necessário
+	short i = 0;
+	while (i < 50) {
+		if (fila[i].membro_aluno.num > 0) {
+			if (fila[i].plafond < r->custo) {
+				cout << "O aluno com o número " << fila[i].membro_aluno.num << " não possui plafond suficiente. " << endl;
+			}
+		}
+		else {
+			if (fila[i].plafond < r->custo) {
+				cout << "O elemento de staff com o número " << fila[i].membro_staff.numFuncionario << " não possui plafond suficiente. " << endl;
+			}
+		}
+		i++;
+	}
+}
+
+void ordenaAlfabeto(mesa* cantina, pessoa* fila) {
+	short y = 0;
+	short i = 0;
+	short p = 0;
+	string max;
+	if (cantina[y].sentados[i].ultNome < cantina[y].sentados[i++].ultNome) {
+		max = cantina[y].sentados[i++].ultNome;
+		cout << max;
+		p++;
+	}
+	else {
+		i++;
+		p++;
+	}
+}
