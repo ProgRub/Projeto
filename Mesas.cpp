@@ -32,7 +32,7 @@ string* escreveMeal(refeição *r) {//escreve a refeição atual, retorna um array d
 	return FIM;
 }
 
-mesa* criaCantina() {//vai obter o tamanho da cantina e gerar tamanhos de mesas até a cantina estar preenchida, tamanhos guardados num vetor
+mesa** criaCantina() {//vai obter o tamanho da cantina e gerar tamanhos de mesas até a cantina estar preenchida, tamanhos guardados num vetor
 	short *TCANTINA = new short(rand() % 21 + 30);
 	short *t = new short();
 	short *aux = new short[25];
@@ -48,46 +48,91 @@ mesa* criaCantina() {//vai obter o tamanho da cantina e gerar tamanhos de mesas 
 		delete TMESA;
 	}
 	short *vtamMesas = copiaVetor(aux, *itera);
-	mesa* vMes= criaMesas(vtamMesas, *itera);
+	mesa** vMes= criaMesas(vtamMesas, *itera);
 	delete itera, TCANTINA, t;
 	delete[]aux;
 	return vMes;
 }
 
-mesa* criaMesas(short *vtamMesas, short tam) {//vai criar as mesas da cantina com o vetor que contem os tamanhos das mesas obtidos em criaCantina
+mesa** criaMesas(short *vtamMesas, short tam) {//vai criar as mesas da cantina com o vetor que contem os tamanhos das mesas obtidos em criaCantina
 	short *itera = new short(0);
-	mesa* vMesas = new mesa[tam];
+	mesa** vMesas = new mesa*[tam];
 	short *num = new short(1);
 	while (*itera < tam) {
 		mesa *m = new mesa();
 		m->numMesa = *num;
 		(*num)++;
 		m->tamanho = vtamMesas[*itera];
-		pessoa *sit = new pessoa[vtamMesas[*itera]];
+		pessoa **sit = new pessoa*[vtamMesas[*itera]];
+		for (int i = 0; i < m->tamanho; i++) {
+			sit[i] = NULL;
+		}
 		m->sentados = sit;
-		guardaVetorMesas(m,vMesas, *itera);
+		if (*itera == 0) {
+			m->totalMesas = tam;
+		}
+		m->numSentados = 0;
+		vMesas[*itera] = m;
 		(*itera)++;
 	}
 	return vMesas;
 }
 
-void guardaVetorMesas(mesa* m, mesa* vetor, short pos) {
-	vetor[pos] = *m;
-}
-
 void escreveMesa(mesa *m) {
 	cout << "Mesa " << m->numMesa << "(CAPACIDADE " << m->tamanho << "):\n";
+	short*i = new short(0);
+	while (*i < m->numSentados) {
+		escrevePessoa(m->sentados[*i]);
+		(*i)++;
+	}
 }
 
-void preencheMesa(mesa *m, pessoa *fila) {
+void preencheMesa(mesa *m, pessoa**fila, short *k) {
 	short*i = new short(0);
 	short*j = new short(0);
+	pessoa**senta = new pessoa*[m->tamanho];
 	while (*i < m->tamanho) {
-		m->sentados[(*i)++] = fila[(*j)++];
+		senta[*i] = fila[*j];
+		fila[*j]=NULL;
+		(*i)++;
+		(*j)++;
 	}
-
+	short l = 0;
+	while(l < m->tamanho) {
+		nullsNoFim(fila, 0, *k);
+		(*k)--;
+		l++;
+	}
+	m->sentados = senta;
+	m->numSentados = *i;
 }
-void testeMesas(mesa *m,pessoa *p) { //verifica as mesas pra ver se tem cursos diferentes
+
+void preencheCantina(mesa**cantina, pessoa**fila) {
+	short i = 0;
+	short*k = new short(49);
+	short *tam = new short(cantina[0]->totalMesas);
+	while (i <*tam ) {
+		preencheMesa(cantina[i], fila, k);
+		i++;
+	}
+}
+void escreveCantina(mesa ** cantina)
+{
+	short *i = new short(0);
+	while (*i < cantina[0]->totalMesas) {
+		escreveMesa(cantina[*i]);
+		(*i)++;
+	}
+}
+
+void nullsNoFim(pessoa**fila, short beg ,short end) {
+	for (beg; beg <= (end-1); beg++) {
+		swap(fila[beg], fila[beg+1]);
+	}
+}
+/*
+
+void testeMesas(mesa *m, pessoa *p) { //verifica as mesas pra ver se tem cursos diferentes
 	short i = 0;
 	bool funciona = false;
 	while (i < m->tamanho) {
@@ -101,24 +146,45 @@ void testeMesas(mesa *m,pessoa *p) { //verifica as mesas pra ver se tem cursos d
 	}
 	cout << funciona << endl;
 }
-
-void removePobres(pessoa *fila, refeição *r) { // averigua se o aluno/funcionário possui Plafond necessário
+*/
+void removePessoa(pessoa **fila, refeição *r) { // averigua se o aluno/funcionário possui Plafond necessário
 	short i = 0;
 	while (i < 50) {
-		if (fila[i].membro_aluno.num > 0) {
-			if (fila[i].plafond < r->custo) {
-				cout << "O aluno com o número " << fila[i].membro_aluno.num << " não possui plafond suficiente. " << endl;
+		if (fila[i] != NULL) {
+			if (fila[i]->membro_aluno.num > 0) {
+				if (fila[i]->plafond < r->custo) {
+					cout << "O aluno com o número " << fila[i]->membro_aluno.num << " não possui plafond suficiente. " << endl;
+				}
 			}
+			else {
+				if (fila[i]->plafond < r->custo) {
+					cout << "O elemento de staff com o número " << fila[i]->membro_staff.numFuncionario << " não possui plafond suficiente. " << endl;
+				}
+			}
+			i++;
 		}
 		else {
-			if (fila[i].plafond < r->custo) {
-				cout << "O elemento de staff com o número " << fila[i].membro_staff.numFuncionario << " não possui plafond suficiente. " << endl;
-			}
+			break;
 		}
-		i++;
 	}
 }
 
+void removeDuração(mesa **cantina) {
+	short i = 0;
+	short j ;
+	short *tam = new short(cantina[0]->totalMesas);
+	for (i; i<*tam;i++) {
+		for (j = 0; j < cantina[i]->numSentados; j++) {
+			if (cantina[i]->sentados[j]->membro_aluno.num > 0) {
+				cantina[i]->sentados[j]->duração--;
+			}
+			else if (cantina[i]->sentados[j]->membro_staff.numFuncionario > 0) {
+				cantina[i]->sentados[j]->duração--;
+			}
+		}
+	}
+}
+/*
 void ordenaAlfabeto(mesa* cantina, pessoa* fila) {
 	short y = 0;
 	short i = 0;
@@ -133,4 +199,5 @@ void ordenaAlfabeto(mesa* cantina, pessoa* fila) {
 		i++;
 		p++;
 	}
-}
+}*/
+
