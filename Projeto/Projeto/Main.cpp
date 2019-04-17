@@ -34,11 +34,14 @@ int main() {
 	preencheCantina(c, fila);
 	escreveCantina(c);
 	cout << endl;
-	escreveFila(fila, 50);
-	/*
-	char opcao;
+	escreveFila(fila, 50); 
 	bool sair = false;
+	criaFila(fila, 50);
+	preencheFila(fila, PNOMES, UNOMES, CURSOS);
+	preencheCantina(c, fila);
 	while (!sair) {
+		char opcao;
+		cout << "\t\t\t\t\t Cantina EDA\n";
 		cout << "\nEscolha uma opcao:\n";
 		cout << " (s) Seguinte \n";
 		cout << " (e) Emergência \n";
@@ -46,14 +49,16 @@ int main() {
 		cout << " (c) Carregar dados \n";
 		cout << " (o) Opções \n";
 		cin >> opcao;
-		cout << endl;
 		switch (opcao) {
 		case 's':
-			cout << " Escolheu Seguinte \n";
-			//linha para fazer a subtraçao do ciclo do tempo de cada refeicao na cantina
+			system("CLS");
+			cout << "\t\t\t\t\t Cantina EDA\n";
+			cout << endl;
+			escreveCantina(c);
+			escreveFila(fila, 50);
+			removeDuração(c); //linha para fazer a subtraçao do ciclo do tempo de cada refeicao na cantina
 			break;
-		}
-	
+
 		case 'e':
 			char opcao1;//opcao dentro da emergencia para escolher entre grupo ou aluno a abandonar
 			cout << " Escolheu Emergência \n";
@@ -65,23 +70,23 @@ int main() {
 				/*falta o cin do numero de ident da pessoa
 				linha para cobrar a refeicao da pessoa
 				linha para remover a pessoa da cantina
-				linha para inserir novos indivíduos na cantina para preencher
+				linha para inserir novos indivíduos na cantina para preencher*/
 				break;
 			case 2:
 				cout << " Insira o número de identificação do grupo \n";
 				/*falta o cin do numero de ident do grpo
 				linha para cobrar refeicao
 				linha para reover grpo da cantina
-				linha para inserir novo grupo na cantina para preencher
+				linha para inserir novo grupo na cantina para preencher*/
 				break;
-			}
+			}/*
 		case 'g':
 			cout << " Escolheu Gravar \n";
 			escreveFicheiro;
 			break;
 		case 'c':
 			cout << " Escolheu Carregar Dados \n";
-			break;
+			break;*/
 		case 'o':
 			int opcao2 = 0;
 			cout << " Escolheu Opções \n";
@@ -98,7 +103,7 @@ int main() {
 				//mostrar todos os individos rejeitados por falta de plafond
 				break;
 			case 4:
-				//alterar o plafond do individuo em espera na fila
+				alterarPlafond(fila);//alterar o plafond do individuo em espera na fila
 				break;
 			case 5:
 				//apresentaçao dos individuos de determinado curso
@@ -114,8 +119,7 @@ int main() {
 				break;
 			}
 		}
-	}*/
+	}
 	system("pause");
-	system("CLS");
 	return 0;
 }
