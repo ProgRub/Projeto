@@ -30,6 +30,6 @@ void escrevePessoa(pessoa *p);
 void criaFila(pessoa**fila, short tam);
 pessoa** preencheFila(pessoa**fila, string* pnomes, string*unomes, string*cursos);
 void escreveFila(pessoa**fila, short tam);
-//void alterarPlafond(int n, pessoa**fila);
+void alterarPlafond(pessoa**fila);
 //void removePobres(pessoa *fila, refeição *r);
 //void ordenaAlfabeto(mesa* cantina, pessoa* fila);

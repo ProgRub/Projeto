@@ -90,11 +90,14 @@ void escreveMesa(mesa *m) {
 void preencheMesa(mesa *m, pessoa**fila, short *k) {
 	short*i = new short(0);
 	short*j = new short(0);
-	pessoa**senta = new pessoa*[m->tamanho];
 	while (*i < m->tamanho) {
-		senta[*i] = fila[*j];
-		fila[*j]=NULL;
+		if (*i > 1) {
+			testeMesas(m, fila[*j], *i);
+		}
+		m->sentados[*i] = fila[*j];
 		(*i)++;
+		m->numSentados = *i;
+		fila[*j]=NULL;
 		(*j)++;
 	}
 	short l = 0;
@@ -103,8 +106,6 @@ void preencheMesa(mesa *m, pessoa**fila, short *k) {
 		(*k)--;
 		l++;
 	}
-	m->sentados = senta;
-	m->numSentados = *i;
 }
 
 void preencheCantina(mesa**cantina, pessoa**fila) {
@@ -130,23 +131,62 @@ void nullsNoFim(pessoa**fila, short beg ,short end) {
 		swap(fila[beg], fila[beg+1]);
 	}
 }
-/*
-
-void testeMesas(mesa *m, pessoa *p) { //verifica as mesas pra ver se tem cursos diferentes
-	short i = 0;
+void testeMesas(mesa *m, pessoa *p, short it) { //verifica as mesas pra ver se tem cursos diferentes
+	short i = it-1;
+	string *curso = new string(m->sentados[i]->membro_aluno.curso);
 	bool funciona = false;
-	while (i < m->tamanho) {
-		if (p->membro_aluno.num > 0) {
-			if (m->sentados[i].membro_aluno.curso == p->membro_aluno.curso) {
+	while (i < m->numSentados) {
+		if(m->sentados[i]!=NULL){
+			if (*curso == p->membro_aluno.curso) {
 				funciona = true;
 			}
+			cout << funciona << endl;
+			i++;
 		}
-		cout << m->sentados[i].membro_aluno.curso << p->membro_aluno.curso << endl;
-		i++;
+		else {
+			i = m->numSentados;
+		}
 	}
-	cout << funciona << endl;
 }
-*//*
+
+void removePessoa(pessoa **fila, refeição *r) { // averigua se o aluno/funcionário possui Plafond necessário
+	short i = 0;
+	while (i < 50) {
+		if (fila[i] != NULL) {
+			if (fila[i]->membro_aluno.num > 0) {
+				if (fila[i]->plafond < r->custo) {
+					cout << "O aluno com o número " << fila[i]->membro_aluno.num << " não possui plafond suficiente. " << endl;
+				}
+			}
+			else {
+				if (fila[i]->plafond < r->custo) {
+					cout << "O elemento de staff com o número " << fila[i]->membro_staff.numFuncionario << " não possui plafond suficiente. " << endl;
+				}
+			}
+			i++;
+		}
+		else {
+			break;
+		}
+	}
+}
+
+void removeDuração(mesa **cantina) {
+	short i = 0;
+	short j;
+	short *tam = new short(cantina[0]->totalMesas);
+	for (i; i < *tam; i++) {
+		for (j = 0; j < cantina[i]->numSentados; j++) {
+			if (cantina[i]->sentados[j]->membro_aluno.num > 0) {
+				cantina[i]->sentados[j]->duração--;
+			}
+			else if (cantina[i]->sentados[j]->membro_staff.numFuncionario > 0) {
+				cantina[i]->sentados[j]->duração--;
+			}
+		}
+	}
+}
+/*
 void removePobres(pessoa *fila, refeição *r) { // averigua se o aluno/funcionário possui Plafond necessário
 	short i = 0;
 	while (i < 50) {

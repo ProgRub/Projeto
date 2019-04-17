@@ -22,9 +22,7 @@ int main() {
 	short*k = new short(49);
 	criaFila(fila, 50);
 	preencheFila(fila, PNOMES, UNOMES, CURSOS);
-	mesa **c = criaCantina();
-	escreveFila(fila, 50);
-	cout << endl;/*
+	mesa **c = criaCantina();/*
 	preencheMesa(c[0], fila, k);
 	cout << endl;
 	preencheMesa(c[1], fila, k);

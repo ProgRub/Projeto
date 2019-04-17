@@ -22,6 +22,7 @@ pessoa* criaPessoa(string pnome, string unome, string curso, short dura, short i
 		delete NUMALUNO;
 	}
 	else {
+		p->membro_aluno.curso = "\0";
 		p->membro_aluno.num = NULL;
 		p->membro_aluno.especialOuNao = NULL;
 		int *NUMSTAFF = new int((19 * 100000) + ((rand() % 999 + 1) * 100) + (rand() % 31 + 70));
@@ -127,22 +128,37 @@ void escreveFila(pessoa**fila, short tam) {
 	}
 }
 
-
-/*
-void alterarPlafond(int n, pessoa**fila) {
+void alterarPlafond(pessoa**fila) {
+	int n;
+	cout << "Insira um número: " << endl;
+	cin >> n;
 	short i = 0;
-	if (fila->membro_aluno.num > 0) {
-		cout << "Plafond inicial: " << fila->plafond << "€" << endl;
-		cout << "Insira um novo plafond: ";
-		cin >> fila->plafond;
-		cout << "Plafond atual: " << fila->plafond << "€" << endl;
-		cout << fila->membro_aluno.num;
+	for (i; i < 50; i++) {
+		if (fila[i] != NULL) {
+			if (fila[i]->membro_aluno.num > 0) {
+				if (fila[i]->membro_aluno.num == n) {
+					cout << "Plafond inicial: " << fila[i]->plafond << "€" << endl;
+					cout << "Insira um novo plafond: ";
+					cin >> fila[i]->plafond;
+					cout << "Plafond atual: " << fila[i]->plafond << "€" << endl;
+					break;
+				}
+			}
+			else if (fila[i]->membro_staff.numFuncionario > 0) {
+				if (fila[i]->membro_staff.numFuncionario == n) {
+					cout << "Plafond inicial: " << fila[i]->plafond << "€" << endl;
+					cout << "Insira um novo plafond: ";
+					cin >> fila[i]->plafond;
+					cout << "Plafond atual: " << fila[i]->plafond << "€" << endl;
+					break;
+				}
+			}
+		}
+		else {
+			i = 49;
+		}
 	}
-	else {
-		cout << "Plafond inicial: " << fila->plafond << "€" << endl;
-		cout << "Insira um novo plafond: ";
-		cin >> fila->plafond;
-		cout << "Plafond atual: " << fila->plafond << "€" << endl;
-		cout << fila->membro_staff.numFuncionario;
+	if (i == 50) {
+		cout << "Não válido" << endl;
 	}
-}*/
+}
