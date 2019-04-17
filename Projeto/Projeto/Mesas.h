@@ -7,6 +7,7 @@ struct mesa
 	short numMesa;
 	short tamanho;
 	pessoa**sentados;
+	short numSentados;
 	short totalMesas;
 
 };
@@ -21,7 +22,9 @@ refeição* novaMeal();
 string* escreveMeal(refeição *r);
 mesa** criaMesas(short *vtamMesas, short pos);
 mesa** criaCantina();
-void guardaVetorMesas(mesa* m, mesa** vetor, short tam);
 void escreveMesa(mesa *m);
-void preencheMesa(mesa *m, pessoa**fila);
+void preencheMesa(mesa *m, pessoa**fila, short *k);
 void testeMesas(mesa *m, pessoa *p);
+void preencheCantina(mesa**cantina, pessoa**fila);
+void escreveCantina(mesa**cantina);
+void nullsNoFim(pessoa**fila, short beg,short end);

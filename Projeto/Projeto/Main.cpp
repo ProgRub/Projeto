@@ -10,7 +10,7 @@ using namespace std;
 int main() {
 	locale::global(locale(""));
 	srand(time(NULL));
-	pessoa ** fila = new pessoa*[50];
+	pessoa ** fila=new pessoa*[50];
 	short *CAPGRUPO = new short(rand() % 10 + 1);
 	cout << "\t\t\t\t\t Cantina EDA\n";
 	string *PNOMES = new string[numLinhas("primeiro_nome.txt")];
@@ -19,17 +19,25 @@ int main() {
 	guardaFicheiros(UNOMES, "ultimo_nome.txt");
 	string *CURSOS = new string[numLinhas("cursos.txt")];
 	guardaFicheiros(CURSOS, "cursos.txt");
-	pessoa **g = criaGrupo(PNOMES, UNOMES, CURSOS);
-	//escrevePessoa(g[0]);
-	//preencheFila(fila, PNOMES, UNOMES, CURSOS); 
+	short*k = new short(49);
+	criaFila(fila, 50);
+	preencheFila(fila, PNOMES, UNOMES, CURSOS);
+	mesa **c = criaCantina();
+	escreveFila(fila, 50);
+	cout << endl;/*
+	preencheMesa(c[0], fila, k);
+	cout << endl;
+	preencheMesa(c[1], fila, k);
+	cout << endl;
+	escreveMesa(c[0]);
+	cout << endl;
+	escreveMesa(c[1]);
+	cout << endl;*/
+	preencheCantina(c, fila);
+	escreveCantina(c);
+	cout << endl;
+	escreveFila(fila, 50);
 	/*
-	escreveFila(fila);
-	
-	mesa*v = criaCantina();
-	preencheMesa(v[0],fila);
-	escreveMesa(v[0]);
-	escreveFila(fila);
-	
 	char opcao;
 	bool sair = false;
 	while (!sair) {
@@ -110,5 +118,6 @@ int main() {
 		}
 	}*/
 	system("pause");
+	system("CLS");
 	return 0;
 }

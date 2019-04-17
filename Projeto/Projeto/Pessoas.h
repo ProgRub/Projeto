@@ -24,11 +24,12 @@ struct pessoa
 	short duração;
 };
 
-pessoa* criaPessoa(string *pnomes, string *unomes, string cursos, short dura, bool alunoOuNao, bool especialOuNao); 
+pessoa* criaPessoa(string pnome, string unome, string curso, short dura, short idOuDepart, float plafond, bool alunoOuNao, bool especialOuNao);
 pessoa** criaGrupo(string *pnomes, string *unomes, string*cursos);
 void escrevePessoa(pessoa *p); 
+void criaFila(pessoa**fila, short tam);
 pessoa** preencheFila(pessoa**fila, string* pnomes, string*unomes, string*cursos);
-void escreveFila(pessoa**fila);
-void alterarPlafond(int n, pessoa**fila);
-void removePobres(pessoa *fila, refeição *r);
-void ordenaAlfabeto(mesa* cantina, pessoa* fila);
+void escreveFila(pessoa**fila, short tam);
+//void alterarPlafond(int n, pessoa**fila);
+//void removePobres(pessoa *fila, refeição *r);
+//void ordenaAlfabeto(mesa* cantina, pessoa* fila);
