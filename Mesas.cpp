@@ -176,7 +176,7 @@ void removeDuração(mesa **cantina) {
 	short *tam = new short(cantina[0]->totalMesas);
 	for (i; i<*tam;i++) {
 		for (j = 0; j < cantina[i]->numSentados; j++) {
-			if (cantina[i]->sentados[j] > 0) {
+			if ((cantina[i]->sentados[j] != NULL) && (cantina[i]->sentados[j]->duração > 0)) {
 				cantina[i]->sentados[j]->duração--;
 			}
 		}
@@ -205,10 +205,11 @@ void removeAcabados(mesa **cantina) {
 	short *tam = new short(cantina[0]->totalMesas);
 	for (i; i < *tam; i++) {
 		for (j = 0; j < cantina[i]->numSentados; j++) {
-			if (cantina[i]->sentados[j] != NULL){
-				if (cantina[i]->sentados[j]->duração == 0) {
-					cantina[i]->sentados[j] = NULL;					
-				} 
+			if ((cantina[i]->sentados[j] != NULL) && (cantina[i]->sentados[j]->duração == 0)) {
+					cantina[i]->sentados[j] = NULL;
+			}
+			else {
+				break;
 			}
 		}
 	}
@@ -216,16 +217,18 @@ void removeAcabados(mesa **cantina) {
 
 void retiraPlafond(mesa**cantina, refeição *r) {
 	short i = 0;
-	short j;
 	short *tam = new short(cantina[0]->totalMesas);
 	for (i; i < *tam; i++) {
-		for (j = 0; j < cantina[i]->numSentados; j++) {
-			if (cantina[i]->sentados[j]->duração == 0) {
+		for (int j = 0; j < cantina[i]->numSentados; j++) {
+			if ((cantina[i]->sentados[j] != NULL) && (cantina[i]->sentados[j]->duração == 0)) {
 				cantina[i]->sentados[j]->plafond -= r->custo;
+				cantina[i]->sentados[j] = NULL;
 			}
-			cout << cantina[i]->sentados[j]->plafond << endl; //não tá dando
+				cout << cantina[i]->sentados[j]->plafond << endl; //não tá dando
 		}
 	}
+	
+
 }
 
 void retiraEmerg(mesa **cantina) {
@@ -261,3 +264,17 @@ void retiraEmerg(mesa **cantina) {
 	cout << "Não válido" << endl;
 	}
 }
+
+/*void testaCursos(mesa ** cantina) {
+	short i = 0;
+	short j;
+	short *tam = new short(cantina[0]->totalMesas);
+	for (i; i < *tam; i++) {
+		for (j = 0; j < cantina[i]->numSentados; j++) {
+			//int *v[] = new int[cantina[i]->
+			if (cantina[i] ->sentados[j]->numDepartamentoOuGrupo !=) {
+				
+			}
+		}
+	}
+}*/

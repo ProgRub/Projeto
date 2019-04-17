@@ -29,8 +29,8 @@ int main() {
 	escreveMesa(c[1]);
 	cout << endl;*/
 	//escreveFila(fila, 50);
-	//refeição *r = new refeição;
-	//r = novaMeal();
+	refeição *r = new refeição;
+	r = novaMeal();
 	//removePessoa(fila, r);
 	bool sair = false;
 	criaFila(fila, 50);
@@ -53,30 +53,35 @@ int main() {
 			cout << endl;
 			escreveCantina(c);
 			escreveFila(fila, 50);
-			removeDuração(c); //linha para fazer a subtraçao do ciclo do tempo de cada refeicao na cantina
+			retiraPlafond(c, r); //não  tá assumindo os que acabam como NULL
+			removeDuração(c);
+			//removeAcabados(c); tá implementado no retiraPlafond
+			//linha para fazer a subtraçao do ciclo do tempo de cada refeicao na cantina
 			break;
 	
 		case 'e':
-			char opcao1;//opcao dentro da emergencia para escolher entre grupo ou aluno a abandonar
+			int opcao1;//opcao dentro da emergencia para escolher entre grupo ou aluno a abandonar
 			cout << " Escolheu Emergência \n";
 			cout << " Escolha a opção:\n1 - Remover Aluno/Funcionário\n2 - Remover Grupo/departamento \n";
 			cin >> opcao1;
 			switch (opcao1) {
-			case 1:
-				cout << " Insira o número de identificação do aluno/funcionário \n";
-				/*falta o cin do numero de ident da pessoa
+			case (1):
+				retiraEmerg(c);
+				/*removePessoa(fila, r);falta o cin do numero de ident da pessoa
 				linha para cobrar a refeicao da pessoa
 				linha para remover a pessoa da cantina
 				linha para inserir novos indivíduos na cantina para preencher*/
 				break;
-			case 2:
+			case (2):
 				cout << " Insira o número de identificação do grupo \n";
 				/*falta o cin do numero de ident do grpo
 				linha para cobrar refeicao
 				linha para reover grpo da cantina
 				linha para inserir novo grupo na cantina para preencher*/
 				break;
-			}/*
+			}
+			break;
+			/*
 		case 'g':
 			cout << " Escolheu Gravar \n";
 			escreveFicheiro;
@@ -115,8 +120,10 @@ int main() {
 				//editar o nome de um individuo
 				break;
 			}
+		
 		}
 	}
+	
 	system("pause");
 	return 0;
 }
