@@ -169,16 +169,14 @@ void removePessoa(pessoa **fila, refeição *r) { // averigua se o aluno/funcionár
 	}
 }
 
+
 void removeDuração(mesa **cantina) {
 	short i = 0;
 	short j ;
 	short *tam = new short(cantina[0]->totalMesas);
 	for (i; i<*tam;i++) {
 		for (j = 0; j < cantina[i]->numSentados; j++) {
-			if (cantina[i]->sentados[j]->membro_aluno.num > 0) {
-				cantina[i]->sentados[j]->duração--;
-			}
-			else if (cantina[i]->sentados[j]->membro_staff.numFuncionario > 0) {
+			if (cantina[i]->sentados[j] > 0) {
 				cantina[i]->sentados[j]->duração--;
 			}
 		}
@@ -201,3 +199,65 @@ void ordenaAlfabeto(mesa* cantina, pessoa* fila) {
 	}
 }*/
 
+void removeAcabados(mesa **cantina) {
+	short i = 0;
+	short j;
+	short *tam = new short(cantina[0]->totalMesas);
+	for (i; i < *tam; i++) {
+		for (j = 0; j < cantina[i]->numSentados; j++) {
+			if (cantina[i]->sentados[j] != NULL){
+				if (cantina[i]->sentados[j]->duração == 0) {
+					cantina[i]->sentados[j] = NULL;					
+				} 
+			}
+		}
+	}
+}
+
+void retiraPlafond(mesa**cantina, refeição *r) {
+	short i = 0;
+	short j;
+	short *tam = new short(cantina[0]->totalMesas);
+	for (i; i < *tam; i++) {
+		for (j = 0; j < cantina[i]->numSentados; j++) {
+			if (cantina[i]->sentados[j]->duração == 0) {
+				cantina[i]->sentados[j]->plafond -= r->custo;
+			}
+			cout << cantina[i]->sentados[j]->plafond << endl; //não tá dando
+		}
+	}
+}
+
+void retiraEmerg(mesa **cantina) {
+	int n;
+	short i = 0;
+	short j;
+	short *tam = new short(cantina[0]->totalMesas);
+	cout << "Emergência, escolha um número pra sair" << endl;
+	cin >> n;
+	for (i; i < *tam; i++) {
+		for (j = 0; j < cantina[i]->numSentados; j++) {
+			if (cantina[i]->sentados[j] != NULL) {
+				if (cantina[i]->sentados[j]->membro_aluno.num > 0) {
+					if (cantina[i]->sentados[j]->membro_aluno.num == n) {
+						cantina[i]->sentados[j] = NULL;
+					}
+				}
+				
+			
+				else if (cantina[i]->sentados[j]->membro_staff.numFuncionario > 0) {
+					if (cantina[i]->sentados[j]->membro_staff.numFuncionario == n) {
+						cantina[i]->sentados[j] = NULL;
+					
+					}
+				}
+				else {
+					i = *tam - 1;
+				}
+			}
+		}
+	}
+	if(i == *tam) {
+	cout << "Não válido" << endl;
+	}
+}
