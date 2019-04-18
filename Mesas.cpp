@@ -265,6 +265,31 @@ void retiraEmerg(mesa **cantina) {
 	}
 }
 
+void retiraGrupo(mesa **cantina) { 
+	int n;
+	short i = 0;
+	short j;
+	short *tam = new short(cantina[0]->totalMesas);
+	cout << "Emergência, escolha um grupo pra sair" << endl;
+	cin >> n;
+	for (i; i < *tam; i++) {
+		for (j = 0; j < cantina[i]->numSentados; j++) {
+			if (cantina[i]->sentados[j] != NULL) {
+				if (cantina[i]->sentados[j]->numDepartamentoOuGrupo == n) {
+					cantina[i]->sentados[j] = NULL;
+				}
+				else {
+					i = *tam - 1;
+				}
+			}
+		}
+		if (i == *tam) {
+			cout << "Não válido" << endl;
+		}
+	}
+}
+
+
 /*void testaCursos(mesa ** cantina) {
 	short i = 0;
 	short j;

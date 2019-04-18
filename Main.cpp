@@ -53,8 +53,8 @@ int main() {
 			cout << endl;
 			escreveCantina(c);
 			escreveFila(fila, 50);
-			retiraPlafond(c, r); //não  tá assumindo os que acabam como NULL
-			removeDuração(c);
+			//retiraPlafond(c, r); //não  tá assumindo os que acabam como NULL
+			//removeDuração(c);
 			//removeAcabados(c); tá implementado no retiraPlafond
 			//linha para fazer a subtraçao do ciclo do tempo de cada refeicao na cantina
 			break;
@@ -73,7 +73,8 @@ int main() {
 				linha para inserir novos indivíduos na cantina para preencher*/
 				break;
 			case (2):
-				cout << " Insira o número de identificação do grupo \n";
+				retiraGrupo(c);
+				//cout << " Insira o número de identificação do grupo \n";
 				/*falta o cin do numero de ident do grpo
 				linha para cobrar refeicao
 				linha para reover grpo da cantina
