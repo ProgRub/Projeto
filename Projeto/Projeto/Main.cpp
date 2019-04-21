@@ -10,116 +10,141 @@ using namespace std;
 int main() {
 	locale::global(locale(""));
 	srand(time(NULL));
-	pessoa ** fila=new pessoa*[50];
-	short *CAPGRUPO = new short(rand() % 10 + 1);
-	cout << "\t\t\t\t\t Cantina EDA\n";
+	pessoa ** fila = new pessoa*[50];
+	pessoa**removidos = new pessoa*[100];
+	pessoa**acabados = new pessoa*[100];
+	int*reserva = new int[400];
+	int opcao1 = 0;
+	int opcao2 = 0;
 	string *PNOMES = new string[numLinhas("primeiro_nome.txt")];
 	guardaFicheiros(PNOMES, "primeiro_nome.txt");
 	string *UNOMES = new string[numLinhas("ultimo_nome.txt")];
 	guardaFicheiros(UNOMES, "ultimo_nome.txt");
 	string *CURSOS = new string[numLinhas("cursos.txt")];
 	guardaFicheiros(CURSOS, "cursos.txt");
-	short*k = new short(49);
+	int*pos = new int(0);
+	int contaCiclo = 0;
 	criaFila(fila, 50);
-	preencheFila(fila, PNOMES, UNOMES, CURSOS);
-	mesa **c = criaCantina();/*
-	preencheMesa(c[0], fila, k);
-	cout << endl;
-	preencheMesa(c[1], fila, k);
-	cout << endl;
-	escreveMesa(c[0]);
-	cout << endl;
-	escreveMesa(c[1]);
-	cout << endl;*/
-	preencheCantina(c, fila);
-	escreveCantina(c);
-	cout << endl;
-	escreveFila(fila, 50); 
+	criaFila(removidos, 100);
+	criaFila(acabados, 100);
+	criaVetor(reserva, 400);
+	mesa **cantina = criaCantina();
 	bool sair = false;
 	criaFila(fila, 50);
-	preencheFila(fila, PNOMES, UNOMES, CURSOS);
-	preencheCantina(c, fila);
+	preencheFila(fila, PNOMES, UNOMES, CURSOS, pos, reserva, 400);
+	refeição*r = novaMeal(true);
 	while (!sair) {
+		system("CLS");
 		char opcao;
 		cout << "\t\t\t\t\t Cantina EDA\n";
-		cout << "\nEscolha uma opcao:\n";
-		cout << " (s) Seguinte \n";
-		cout << " (e) Emergência \n";
-		cout << " (g) Gravar \n";
-		cout << " (c) Carregar dados \n";
-		cout << " (o) Opções \n";
+		cout << "Escolha uma opcao:\n";
+		cout << "(s) Seguinte\t";
+		cout << "(e) Emergência\t";
+		cout << "(g) Gravar\t";
+		cout << "(c) Carregar dados\t";
+		cout << "(o) Opções\t";
 		cin >> opcao;
 		switch (opcao) {
 		case 's':
-			system("CLS");
 			cout << "\t\t\t\t\t Cantina EDA\n";
 			cout << endl;
-			escreveCantina(c);
+			contaCiclo++;
+			removeDuração(cantina);
+			removeAcabados(cantina, acabados, 100, r);
+			preencheCantina(cantina, fila, pos, r,removidos,100);
+			preencheFila(fila, PNOMES, UNOMES, CURSOS, pos, reserva, 400);
+			escreveMeal(r);
+			escreveCantina(cantina);
 			escreveFila(fila, 50);
-			removeDuração(c); //linha para fazer a subtraçao do ciclo do tempo de cada refeicao na cantina
+			if (contaCiclo % 10 == 0) {
+				r = novaMeal(false);
+			}
+			system("pause");
 			break;
 
-		case 'e':
-			char opcao1;//opcao dentro da emergencia para escolher entre grupo ou aluno a abandonar
-			cout << " Escolheu Emergência \n";
-			cout << " Escolha a opção:\n1 - Remover Aluno/Funcionário\n2 - Remover Grupo/departamento \n";
+		case 'e'://opcao dentro da emergencia para escolher entre grupo ou aluno a abandonar
+			cout << " Escolheu Emergência\n";
+			cout << " Escolha a opção:\n1 - Remover Aluno/Funcionário\n2 - Remover Grupo/departamento\n";
 			cin >> opcao1;
 			switch (opcao1) {
-			case 1:
-				cout << " Insira o número de identificação do aluno/funcionário \n";
-				/*falta o cin do numero de ident da pessoa
-				linha para cobrar a refeicao da pessoa
-				linha para remover a pessoa da cantina
-				linha para inserir novos indivíduos na cantina para preencher*/
+			case (1):
+				escreveCantina(cantina);
+				escreveFila(fila,50);
+				retiraEmergPessoa(cantina, acabados, 100, r);
+				preencheCantina(cantina, fila, pos, r, removidos, 100);
+				(*pos)--;
+				escreveCantina(cantina);
 				break;
-			case 2:
-				cout << " Insira o número de identificação do grupo \n";
-				/*falta o cin do numero de ident do grpo
-				linha para cobrar refeicao
-				linha para reover grpo da cantina
-				linha para inserir novo grupo na cantina para preencher*/
+			case (2):
+				escreveCantina(cantina);
+				escreveFila(fila, 50);
+				retiraEmergGrupo(cantina, acabados, 100, r);
+				preencheCantina(cantina, fila, pos, r, removidos, 100);
+				(*pos)--;
 				break;
-			}/*
+			}
+			system("pause");
+			break;
 		case 'g':
-			cout << " Escolheu Gravar \n";
-			escreveFicheiro;
+			cout << "Escolheu Gravar Dados" << endl;
+			gravaRefeição(r);
+			gravaCantina(cantina);
+			gravaFila(fila, 50);
+			cout << "Gravado com sucesso!" << endl;
+			system("pause");
 			break;
 		case 'c':
-			cout << " Escolheu Carregar Dados \n";
-			break;*/
+			cout << " Escolheu Carregar Dados\n";
+			criaVetor(reserva, 400);
+			criaFila(fila, 50);
+			carregaRefeição(r);
+			cantina = carregaCantina(cantina, contaCantina(), reserva,400);
+			carregaFila(fila, 50, pos, reserva, 400);
+			escreveMeal(r);
+			escreveCantina(cantina);
+			escreveFila(fila, 50);
+			contaCiclo = 0;
+			system("pause");
+			break;
 		case 'o':
-			int opcao2 = 0;
 			cout << " Escolheu Opções \n";
-			cout << " Escolha a opção: \n1 - Mostrar todos os indivíduos do sistema\n2 - Mostrar todas as mesas\n3 - Mostrar todos os indivíduos rejeitados por falta de plafond\n4 - Alterar o plafond do indivíduo enquanto este está na fila\n5 - Apresentação dos indivíduos de um determinado departamento\n6 - Editar a duração da refeição de um grupo/departamento\n7 - Pesquisa de indivíduos com base no seu id\n8 - Editar nome de um indivíduo\n ";
+			cout << " Escolha a opção:\n1 - Mostrar todos os indivíduos do sistema\n2 - Mostrar todas as mesas\n3 - Mostrar todos os indivíduos rejeitados por falta de plafond\n4 - Alterar o plafond do indivíduo enquanto este está na fila\n5 - Apresentação dos indivíduos de um determinado departamento\n6 - Editar a duração da refeição de um grupo/departamento\n7 - Pesquisa de indivíduos com base no seu id\n8 - Editar nome de um indivíduo\n";
 			cin >> opcao2;
 			switch (opcao2) {
-			case 1:
-				//mostrar todos os individuos do sistema
+			case (1):
+				ordenaAlfabeticamenteUltNome(cantina, fila, acabados, contaPessoasCantina(cantina), contaPessoasFila(fila), contaAcabados(acabados));
+				//mostrar todos os individuos do sistema ordenados alfabeticamente pelo último nome
 				break;
-			case 2:
+			case (2):
 				//mostrar todas as mesas
 				break;
-			case 3:
+			case (3):
 				//mostrar todos os individos rejeitados por falta de plafond
 				break;
-			case 4:
+			case (4):
+				escreveFila(fila, 50);
 				alterarPlafond(fila);//alterar o plafond do individuo em espera na fila
 				break;
-			case 5:
+			case (5):
 				//apresentaçao dos individuos de determinado curso
 				break;
-			case 6:
+			case (6):
 				//editar a duração de uma refeição de um grupo/departamento
 				break;
-			case 7:
+			case (7):
 				//pesquisa com base no numero de aluno
 				break;
-			case 8:
+			case (8):
 				//editar o nome de um individuo
 				break;
 			}
+			system("pause");
+			break;
+		default:
+			cout << "Carater não válido" << endl;
+			system("pause");
+			break;
 		}
 	}
-	system("pause");
 	return 0;
 }

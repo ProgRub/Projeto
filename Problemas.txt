@@ -2,20 +2,20 @@ criação numeros aleatorios - feito
 crição cantina - feito
 preenchimento cantina - feito
 remover alunos e staff que terminaram - feito
-cobrar refeições - ?
+cobrar refeições - feito
 mover alunos/staff da fila para a cantina, prioridade especiais - feito
 gerar novos alunos/staff para fila - feito
 alteração refeições - feito
 escrita refeições - feito
 escrita alunos/staff - feito
 escrita mesas - feito
-nº de grupo ou departamento não repetem - ?
+nº de grupo ou departamento não repetem - feito
 se não há vagas suficientes, grupo não entra - ?
 cursos diferentes, nunca mesma mesa - feito
-gravar dados - ?
-carregamento dados para continuar execução - ?
+gravar dados - feito
+carregamento dados para continuar execução - feito
 aluno/staff/grupo ter que sair a meio da refeição - feito
-sem dinheiro suficiente não entra, remove aluno/staff ou grupo/departamento todo - ?
-alunos/staff removidos guardados (max 100) - ?
+sem dinheiro suficiente não entra, remove aluno/staff ou grupo/departamento todo - feito
+alunos/staff removidos guardados (max 100) - feito
 alterar plafond de pessoa na fila, através de id ou nºo de aluno - feito
-mostrar todos os individuos no sistema ordenados alfabeticamente ultimo nome - ?
+mostrar todos os individuos no sistema ordenados alfabeticamente ultimo nome - feito

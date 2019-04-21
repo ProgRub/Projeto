@@ -1,8 +1,22 @@
 #pragma once
 #include <string>
+#include"Pessoas.h"
+#include"Mesas.h"
 using namespace std;
 
 void guardaFicheiros(string* Lista, string nome);
-short numLinhas(string nome_ficheiro);
-void escreveFicheiro(string *output,short tamanho, bool primeiraVez);
-short* copiaVetor(short* aux, short tamanho);
+int numLinhas(string nome_ficheiro);
+int* copiaVetor(int* aux, int tamanho);
+void criaVetor(int*res, int tamanho);
+void gravaPessoaFila(pessoa * p);
+void gravaPessoaCantina(pessoa * p);
+void gravaFila(pessoa**fila, int tam);
+void gravaCantina(mesa**cantina);
+void gravaRefeição(refeição*r);
+void carregaAluno(string PriNome, string UltNome, string EspecialouNao, string DepGru, string Curso, string numAluFunc, string duracao, string plaf, string tamGrupo, pessoa*p, int*reserva, int tamReserva);
+void carregaStaff(string PriNome, string UltNome, string DepGru, string numAluFunc, string duracao, string plaf, string tamGrupo, pessoa*p, int*reserva, int tamReserva);
+void carregaFila(pessoa**fila, int tam, int*pos, int*reserva, int tamReserva);
+mesa** carregaCantina(mesa**canteen, int numMesas, int*reserva, int tamReserva);
+void carregaRefeição(refeição*r);
+int contaCantina();
+void adicionaReservaNum(int*reserva, int num, int tam);

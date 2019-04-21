@@ -6,14 +6,14 @@
 #include<fstream>
 using namespace std;
 
-pessoa* criaPessoa(string pnome, string unome, string curso, short dura, short idOuDepart,  float plafond ,bool alunoOuNao, bool especialOuNao) {
+pessoa* criaPessoa(string pnome, string unome, string curso, int dura, int idOuDepart, float plafond, bool alunoOuNao, bool especialOuNao) {// vai criar uma pessoa
 	pessoa *p = new pessoa;
 	p->priNome = pnome;
 	p->ultNome = unome;
 	p->plafond = plafond;
 	p->duração = dura;
 	p->numDepartamentoOuGrupo = idOuDepart;
-	if (alunoOuNao) {
+	if (alunoOuNao) {// se alunoOuNao é true vai criar um aluno
 		p->membro_aluno.curso = curso;
 		int *NUMALUNO = new int((20 * 100000) + ((rand() % 999 + 1) * 100) + (rand() % 7 + 12));
 		p->membro_aluno.num = *NUMALUNO;
@@ -21,7 +21,7 @@ pessoa* criaPessoa(string pnome, string unome, string curso, short dura, short i
 		p->membro_staff.numFuncionario = NULL;
 		delete NUMALUNO;
 	}
-	else {
+	else {// senão cria um funcionário de staff
 		p->membro_aluno.curso = "\0";
 		p->membro_aluno.num = NULL;
 		p->membro_aluno.especialOuNao = NULL;
@@ -32,15 +32,16 @@ pessoa* criaPessoa(string pnome, string unome, string curso, short dura, short i
 	return p;
 }
 
-pessoa** criaGrupo(string *pnomes, string *unomes, string*cursos) {
-	short *RETIRACURSO = new short(rand() % 19);
-	short *DURAÇÃOMEAL = new short(rand() % 4 + 2);
+pessoa** criaGrupo(string *pnomes, string *unomes, string*cursos, int*reserva, int tamRes) {//vai criar um grupo de pessoas, que devem ter o mesmo nº de grupo, se for staff, o mesmo nº de departamento
+	int *RETIRACURSO = new int(rand() % 19);
+	int *DURAÇÃOMEAL = new int(rand() % 4 + 2);
 	bool *ALUNOOUNAO = new bool(rand() % 2);
-	short *PROBESP = new short(rand() % 100 + 1);
-	if (*PROBESP > 15 && *PROBESP <= 20) {
-		short *GRUPOIDDEPART = new short(rand() % 401 + 100);
-		short *RETIRAPNOME = new short(rand() % 44);
-		short *RETIRAUNOME = new short(rand() % 97);
+	int *GRUPOIDDEPART = new int(rand() % 401 + 100);
+	testaGrupoDep(GRUPOIDDEPART, reserva, tamRes);//vai testar o número de grupo pois devem ser identificadores únicos
+	int *PROBESP = new int(rand() % 100 + 1);
+	if (*PROBESP > 15 && *PROBESP <= 20) {//no caso de se criar um aluno especial
+		int *RETIRAPNOME = new int(rand() % 44);
+		int *RETIRAUNOME = new int(rand() % 97);
 		float *PLAF = new float(rand() % 100 + 1);
 		pessoa *p = criaPessoa(pnomes[*RETIRAPNOME], unomes[*RETIRAUNOME], cursos[*RETIRACURSO], *DURAÇÃOMEAL, *GRUPOIDDEPART, *PLAF, true, true);
 		pessoa**l = new pessoa*[1];
@@ -50,89 +51,84 @@ pessoa** criaGrupo(string *pnomes, string *unomes, string*cursos) {
 		return l;
 	}
 	else {
-		short *TAMANHO = new short(rand() % 10 + 1);
-		short *itera = new short(0);
-		short *GRUPOIDDEPART = new short(rand() % 401 + 100);
+		int *TAMANHO = new int(rand() % 10 + 1);//tamanho do grupo
+		int i = 0;
 		pessoa*p = new pessoa;
 		pessoa**l = new pessoa*[*TAMANHO];
-		for (*itera; *itera < *TAMANHO; (*itera)++) {
-			short *RETIRAPNOME = new short(rand() % 44);
-			short *RETIRAUNOME = new short(rand() % 97);
+		for (i; i < *TAMANHO; i++) {
+			int *RETIRAPNOME = new int(rand() % 44);
+			int *RETIRAUNOME = new int(rand() % 97);
 			float *PLAF = new float(rand() % 100 + 1);
 			pessoa*p = criaPessoa(pnomes[*RETIRAPNOME], unomes[*RETIRAUNOME], cursos[*RETIRACURSO], *DURAÇÃOMEAL, *GRUPOIDDEPART, *PLAF, *ALUNOOUNAO, false);
-			if (*itera == 0) {
-				p->tamanho = *TAMANHO;
-			}
-			l[*itera] = p;
+			p->tamanho = *TAMANHO - i;
+			l[i] = p;
 			delete RETIRAPNOME, RETIRAUNOME, PLAF;
 		}
-		delete itera,TAMANHO,GRUPOIDDEPART;
+		delete TAMANHO, GRUPOIDDEPART;
 		return l;
 	}
-	delete RETIRACURSO, PROBESP,DURAÇÃOMEAL,ALUNOOUNAO;
+	delete RETIRACURSO, PROBESP, DURAÇÃOMEAL, ALUNOOUNAO;
 }
 
-void escrevePessoa(pessoa *p) {
+void escrevePessoa(pessoa *p) {//como o nome indica escreve a pessoa que recebe como argumento
 	if (p == NULL) {
-		cout << "-----NULL-----\n";
+		cout << endl;
 	}
 	else {
 		if (p->membro_aluno.num > 0) {
 			if (!p->membro_aluno.especialOuNao) {
-				cout << p->priNome << " " << p->ultNome << ", Estudante, Grupo " << p->numDepartamentoOuGrupo << ", " << p->membro_aluno.curso << ", " << p->membro_aluno.num << ", duração " << p->duração << ", " << p->plafond << "€\n";
+				cout << p->priNome << " " << p->ultNome << ", Estudante, Grupo " << p->numDepartamentoOuGrupo << ", " << p->membro_aluno.curso << ", " << p->membro_aluno.num << ", duração " << p->duração << ", " << p->plafond << "€" << endl;
 			}
 			else {
-				cout << p->priNome << " " << p->ultNome << ", Estudante (especial), Grupo " << p->numDepartamentoOuGrupo << ", " << p->membro_aluno.curso << ", " << p->membro_aluno.num << ", duração " << p->duração << ", " << p->plafond << "€\n";
+				cout << p->priNome << " " << p->ultNome << ", Estudante (especial), Grupo " << p->numDepartamentoOuGrupo << ", " << p->membro_aluno.curso << ", " << p->membro_aluno.num << ", duração " << p->duração << ", " << p->plafond << "€" << endl;
 			}
 		}
 		else {
-			cout << p->priNome << " " << p->ultNome << ", Staff, Departamento " << p->numDepartamentoOuGrupo << ", " << p->membro_staff.numFuncionario << ", duração " << p->duração << ", " << p->plafond << "€\n";
+			cout << p->priNome << " " << p->ultNome << ", Staff, Departamento " << p->numDepartamentoOuGrupo << ", " << p->membro_staff.numFuncionario << ", duração " << p->duração << ", " << p->plafond << "€" << endl;
 		}
 	}
 }
 
-void criaFila(pessoa**fila, short tam) {
-	short i = 0;
-	for (short i = 0; i < tam; i++) {
+void criaFila(pessoa**fila, int tam) {//vai por todos os lugares num vetor de pessoa* como NULL para ser mais fácil o manuseamento do vetor
+	int i = 0;
+	for (int i = 0; i < tam; i++) {
 		fila[i] = NULL;
 	}
 }
 
-pessoa** preencheFila(pessoa**fila, string* pnomes, string*unomes, string*cursos) {
-	short*i = new short(0);
-	short*j = new short(0);
-	pessoa**g = criaGrupo(pnomes, unomes, cursos);
-	short*tam = new short(g[0]->tamanho);
-	while(*i<50) {
-		if (*j < *tam) {
-			fila[(*i)] = g[(*j)];
-			(*j)++;
-			(*i)++;
+void preencheFila(pessoa**fila, string* pnomes, string*unomes, string*cursos, int *pos,int*reserva, int tamRes) {//vai preencher a fila, gerando um grupo de pessoas para os lugares vazios
+	int j = 0;
+	pessoa**g = criaGrupo(pnomes, unomes, cursos,reserva,tamRes);
+	int*tam = new int(g[0]->tamanho);
+	while (*pos < 50) {
+		if (j < *tam) {
+			fila[*pos] = g[j];
+			j++;
+			(*pos)++;
 		}
-		else  {
-			g=criaGrupo(pnomes, unomes, cursos);
+		else {
+			g = criaGrupo(pnomes, unomes, cursos, reserva, tamRes);
 			*tam = g[0]->tamanho;
-			*j = 0;
+			j = 0;
 		}
 	}
-	delete i, j;
-	return fila;
+	(*pos)--;//a posição final não pode ser maior do que o indice permite
 }
 
-void escreveFila(pessoa**fila, short tam) {
-	short*i = new short(0);
-	while (*i < tam) {
-		cout << *i + 1 << ". ";
-		escrevePessoa(fila[(*i)]);
-		(*i)++;
+void escreveFila(pessoa**fila, int tam) {//como o nome indica escreve um vetor de pessoa*
+	int i = 0;
+	while (i < tam) {
+		cout << i + 1 << ". ";
+		escrevePessoa(fila[i]);
+		i++;
 	}
 }
 
-void alterarPlafond(pessoa**fila) {
+void alterarPlafond(pessoa**fila) {// opção 4, altera o plafond de uma pessoa na fila de espera pelo número de aluno ou de funcionário
 	int n;
 	cout << "Insira um número: " << endl;
 	cin >> n;
-	short i = 0;
+	int i = 0;
 	for (i; i < 50; i++) {
 		if (fila[i] != NULL) {
 			if (fila[i]->membro_aluno.num > 0) {
@@ -160,5 +156,38 @@ void alterarPlafond(pessoa**fila) {
 	}
 	if (i == 50) {
 		cout << "Não válido" << endl;
+	}
+}
+
+void procuraEspecial(pessoa**fila,int tam) {// vai percorrer a fila para ver se há estudantes especiais
+	int j;
+	int aconteceu = 0;
+	for (int i = 0; i < tam; i++) {
+		if (fila[i] != NULL) {
+			if (fila[i]->membro_aluno.especialOuNao) {//se há estudante especial este passa para a primeira posição da fila porque tem prioridade
+				j = i;
+				for (j; j > aconteceu; j--) {
+					swap(fila[j - 1], fila[j]);
+				}
+				aconteceu++;
+			}
+		}
+		else {
+			break;
+		}
+	}
+}
+
+void testaGrupoDep(int * num, int * reserva, int tam){// vê se o número de grupo ou departamento é único
+	for (int i = 0; i < tam; i++) {
+		if (reserva[i] != NULL) {
+			if (reserva[i] == *num) {
+				*num= (rand() % 401 + 100);
+			}
+		}
+		else {
+			reserva[i] = *num;
+			i = 100;
+		}
 	}
 }
