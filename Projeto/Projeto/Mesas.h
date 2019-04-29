@@ -46,3 +46,4 @@ void mergeSortMesasNumSentados(mesa ** cantina, int tam);
 void mergeMesas(mesa ** left, mesa ** right, mesa ** cantina, int n_left, int n_right, int tam);
 void reverseOrdenação(mesa**cantina, int tam);
 void mergeReverseOrdenação(mesa ** left, mesa ** right, mesa ** cantina, int n_left, int n_right, int tam);
+void vagasPossiveis(int*vagasPossiveis, pessoa*p, mesa**cantina, int k, int vagas);

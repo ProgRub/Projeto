@@ -10,7 +10,7 @@ escrita refeições - feito
 escrita alunos/staff - feito
 escrita mesas - feito
 nº de grupo ou departamento não repetem - feito
-se não há vagas suficientes, grupo não entra - ?
+se não há vagas suficientes, grupo não entra - feito
 cursos diferentes, nunca mesma mesa - feito
 gravar dados - feito
 carregamento dados para continuar execução - feito

@@ -211,11 +211,13 @@ void testaGrupoDep(int * num, int * reserva, int tam){// vê se o número de grupo
 		if (reserva[i] != NULL) {
 			if (reserva[i] == *num) {
 				*num= (rand() % 401 + 100);
+				testaGrupoDep(num, reserva, 400);
+				i = 400;
 			}
 		}
 		else {
 			reserva[i] = *num;
-			i = 100;
+			i = 400;
 		}
 	}
 }
