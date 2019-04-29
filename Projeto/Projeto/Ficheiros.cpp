@@ -50,7 +50,7 @@ void criaVetor(int*res, int tamanho) {//cria o vetor que vai guardar os números 
 	}
 }
 
-void gravaPessoaFila(pessoa * p){//vai gravar uma pessoa da fila no ficheiro "Fila da cantinta.txt". Cada dado fica numa linha individual para ser mais fácil o carregamento do ficheiro
+void gravaPessoaFila(pessoa * p){//vai gravar uma pessoa da fila no ficheiro. Cada dado fica numa linha individual para ser mais fácil o carregamento do ficheiro
 	fstream ficheiro("Fila da cantina.txt", ios::out | ios::app);
 	if (ficheiro.is_open()) {
 		if (p == NULL) {
@@ -73,7 +73,53 @@ void gravaPessoaFila(pessoa * p){//vai gravar uma pessoa da fila no ficheiro "Fi
 	ficheiro.close();
 }
 
-void gravaPessoaCantina(pessoa * p) {//vai gravar uma pessoa da cantina no ficheiro "Cantina.txt". Cada dado fica numa linha individual para ser mais fácil o carregamento do ficheiro
+void gravaPessoaAcabados(pessoa * p) {//vai gravar uma pessoa que acabou a refeição no ficheiro . Cada dado fica numa linha individual para ser mais fácil o carregamento do ficheiro
+	fstream ficheiro("Pessoas que acabaram.txt", ios::out | ios::app);
+	if (ficheiro.is_open()) {
+		if (p == NULL) {
+			ficheiro << "-----NULL-----" << endl;
+		}
+		else {
+			if (p->membro_aluno.num > 0) {
+				if (!p->membro_aluno.especialOuNao) {
+					ficheiro << p->priNome << endl << p->ultNome << endl << "Estudante" << endl << p->numDepartamentoOuGrupo << endl << p->membro_aluno.curso << endl << to_string(p->membro_aluno.num) << endl << p->duração << endl << p->plafond << endl << p->tamanho << endl;
+				}
+				else {
+					ficheiro << p->priNome << endl << p->ultNome << endl << "Estudante Especial" << endl << p->numDepartamentoOuGrupo << endl << p->membro_aluno.curso << endl << to_string(p->membro_aluno.num) << endl << p->duração << endl << p->plafond << endl << p->tamanho << endl;
+				}
+			}
+			else {
+				ficheiro << p->priNome << endl << p->ultNome << endl << "Staff" << endl << p->numDepartamentoOuGrupo << endl << to_string(p->membro_staff.numFuncionario) << endl << p->duração << endl << p->plafond << endl << p->tamanho << endl;
+			}
+		}
+	}
+	ficheiro.close();
+}
+
+void gravaPessoaRemovidos(pessoa * p) {//vai gravar uma pessoa que foi removida no ficheiro. Cada dado fica numa linha individual para ser mais fácil o carregamento do ficheiro
+	fstream ficheiro("Pessoas removidas.txt", ios::out | ios::app);
+	if (ficheiro.is_open()) {
+		if (p == NULL) {
+			ficheiro << "-----NULL-----" << endl;
+		}
+		else {
+			if (p->membro_aluno.num > 0) {
+				if (!p->membro_aluno.especialOuNao) {
+					ficheiro << p->priNome << endl << p->ultNome << endl << "Estudante" << endl << p->numDepartamentoOuGrupo << endl << p->membro_aluno.curso << endl << to_string(p->membro_aluno.num) << endl << p->duração << endl << p->plafond << endl << p->tamanho << endl;
+				}
+				else {
+					ficheiro << p->priNome << endl << p->ultNome << endl << "Estudante Especial" << endl << p->numDepartamentoOuGrupo << endl << p->membro_aluno.curso << endl << to_string(p->membro_aluno.num) << endl << p->duração << endl << p->plafond << endl << p->tamanho << endl;
+				}
+			}
+			else {
+				ficheiro << p->priNome << endl << p->ultNome << endl << "Staff" << endl << p->numDepartamentoOuGrupo << endl << to_string(p->membro_staff.numFuncionario) << endl << p->duração << endl << p->plafond << endl << p->tamanho << endl;
+			}
+		}
+	}
+	ficheiro.close();
+}
+
+void gravaPessoaCantina(pessoa * p) {//vai gravar uma pessoa da cantina no ficheiro. Cada dado fica numa linha individual para ser mais fácil o carregamento do ficheiro
 	fstream ficheiro("Cantina.txt", ios::out | ios::app);
 	if (ficheiro.is_open()) {
 		if (p == NULL) {
@@ -102,6 +148,30 @@ void gravaFila(pessoa ** fila, int tam){//grava a fila de pessoas no ficheiro
 		int i = 0;
 		while (i < tam) {
 			gravaPessoaFila(fila[i]);
+			i++;
+		}
+	}
+	ficheiro.close();
+}
+
+void gravaAcabados(pessoa ** acabados, int tam) {//grava as pessoas que acabaram no ficheiro
+	fstream ficheiro("Pessoas que acabaram.txt", ios::out);
+	if (ficheiro.is_open()) {
+		int i = 0;
+		while (i < tam) {
+			gravaPessoaAcabados(acabados[i]);
+			i++;
+		}
+	}
+	ficheiro.close();
+}
+
+void gravaRemovidos(pessoa ** removidos, int tam) {//grava as pessoas que foram removidas por insuficiência de plafond no ficheiro
+	fstream ficheiro("Pessoas removidas.txt", ios::out);
+	if (ficheiro.is_open()) {
+		int i = 0;
+		while (i < tam) {
+			gravaPessoaRemovidos(removidos[i]);
 			i++;
 		}
 	}
@@ -189,35 +259,35 @@ void carregaFila(pessoa ** fila, int tam, int*pos, int*reserva, int tamReserva) 
 		*pos = 0;
 		for (int j = 0; j < tam; j++) {
 			pessoa*p = new pessoa;
-			string PriNome;
-			string UltNome;
-			string AlunoouNao;
-			string GrupoDep;
-			string Curso;
-			string numAlunoFunc;
-			string duração;
-			string plafond;
-			string tamGrupo;
-			getline(ficheiro, PriNome);
-			if (PriNome != "-----NULL-----") {//verifica se está a guardar pessoas e não lugares vazios da fila
-				getline(ficheiro, UltNome);
-				getline(ficheiro, AlunoouNao);
-				if (AlunoouNao != "Staff") {
-					getline(ficheiro, GrupoDep);
-					getline(ficheiro, Curso);
-					getline(ficheiro, numAlunoFunc);
-					getline(ficheiro, duração);
-					getline(ficheiro, plafond);
-					getline(ficheiro, tamGrupo);
-					carregaAluno(PriNome, UltNome, AlunoouNao, GrupoDep, Curso, numAlunoFunc, duração, plafond, tamGrupo, p, reserva,tamReserva);
+			string *PriNome=new string;
+			string *UltNome = new string;
+			string *AlunoouNao = new string;
+			string *GrupoDep = new string;
+			string *Curso = new string;
+			string *numAlunoFunc = new string;
+			string *duração = new string;
+			string *plafond = new string;
+			string *tamGrupo = new string;
+			getline(ficheiro, *PriNome);
+			if (*PriNome != "-----NULL-----") {//verifica se está a guardar pessoas e não lugares vazios da fila
+				getline(ficheiro, *UltNome);
+				getline(ficheiro, *AlunoouNao);
+				if (*AlunoouNao != "Staff") {
+					getline(ficheiro, *GrupoDep);
+					getline(ficheiro, *Curso);
+					getline(ficheiro, *numAlunoFunc);
+					getline(ficheiro, *duração);
+					getline(ficheiro, *plafond);
+					getline(ficheiro, *tamGrupo);
+					carregaAluno(*PriNome,* UltNome, *AlunoouNao, *GrupoDep, *Curso, *numAlunoFunc, *duração, *plafond, *tamGrupo, p, reserva,tamReserva);
 				}
 				else {
-					getline(ficheiro, GrupoDep);
-					getline(ficheiro, numAlunoFunc);
-					getline(ficheiro, duração);
-					getline(ficheiro, plafond);
-					getline(ficheiro, tamGrupo);
-					carregaStaff(PriNome, UltNome, GrupoDep, numAlunoFunc, duração, plafond, tamGrupo, p, reserva, tamReserva);
+					getline(ficheiro, *GrupoDep);
+					getline(ficheiro, *numAlunoFunc);
+					getline(ficheiro, *duração);
+					getline(ficheiro, *plafond);
+					getline(ficheiro, *tamGrupo);
+					carregaStaff(*PriNome, *UltNome, *GrupoDep, *numAlunoFunc, *duração, *plafond, *tamGrupo, p, reserva, tamReserva);
 				}
 				fila[j] = p;
 				(*pos)++;
@@ -225,10 +295,103 @@ void carregaFila(pessoa ** fila, int tam, int*pos, int*reserva, int tamReserva) 
 			else {
 				fila[j] = NULL;
 			}
+			delete PriNome, UltNome, GrupoDep, numAlunoFunc, duração, plafond, tamGrupo, AlunoouNao, Curso;
 		}
 	}
 	if (*pos >= 50) {//certifica que está dentro dos índices possíveis para não encontrar erros
 		(*pos)--;
+	}
+	ficheiro.close();
+}
+
+void carregaAcabados(pessoa ** acabados, int tam, int*reserva, int tamReserva) {//vai carregar as pessoas  que acabaram do ficheiro
+	fstream ficheiro("Pessoas que acabaram.txt", ios::in);
+	if (ficheiro.is_open()) {
+		for (int j = 0; j < tam; j++) {
+			pessoa*p = new pessoa;
+			string *PriNome = new string;
+			string *UltNome = new string;
+			string *AlunoouNao = new string;
+			string *GrupoDep = new string;
+			string *Curso = new string;
+			string *numAlunoFunc = new string;
+			string *duração = new string;
+			string *plafond = new string;
+			string *tamGrupo = new string;
+			getline(ficheiro, *PriNome);
+			if (*PriNome != "-----NULL-----") {//verifica se está a guardar pessoas e não lugares vazios da fila
+				getline(ficheiro, *UltNome);
+				getline(ficheiro, *AlunoouNao);
+				if (*AlunoouNao != "Staff") {
+					getline(ficheiro, *GrupoDep);
+					getline(ficheiro, *Curso);
+					getline(ficheiro, *numAlunoFunc);
+					getline(ficheiro, *duração);
+					getline(ficheiro, *plafond);
+					getline(ficheiro, *tamGrupo);
+					carregaAluno(*PriNome, *UltNome, *AlunoouNao, *GrupoDep, *Curso, *numAlunoFunc, *duração, *plafond, *tamGrupo, p, reserva, tamReserva);
+				}
+				else {
+					getline(ficheiro, *GrupoDep);
+					getline(ficheiro, *numAlunoFunc);
+					getline(ficheiro, *duração);
+					getline(ficheiro, *plafond);
+					getline(ficheiro, *tamGrupo);
+					carregaStaff(*PriNome, *UltNome, *GrupoDep, *numAlunoFunc, *duração, *plafond, *tamGrupo, p, reserva, tamReserva);
+				}
+				acabados[j] = p;
+			}
+			else {
+				acabados[j] = NULL;
+			}
+			delete PriNome, UltNome, GrupoDep, numAlunoFunc, duração, plafond, tamGrupo, AlunoouNao, Curso;
+		}
+	}
+	ficheiro.close();
+}
+
+void carregaRemovidos(pessoa ** removidos, int tam, int*reserva, int tamReserva) {//vai carregar as pessoas que foram removidas porque não tinham plafond suficiente do ficheiro
+	fstream ficheiro("Pessoas removidas.txt", ios::in);
+	if (ficheiro.is_open()) {
+		for (int j = 0; j < tam; j++) {
+			pessoa*p = new pessoa;
+			string *PriNome = new string;
+			string *UltNome = new string;
+			string *AlunoouNao = new string;
+			string *GrupoDep = new string;
+			string *Curso = new string;
+			string *numAlunoFunc = new string;
+			string *duração = new string;
+			string *plafond = new string;
+			string *tamGrupo = new string;
+			getline(ficheiro, *PriNome);
+			if (*PriNome != "-----NULL-----") {//verifica se está a guardar pessoas e não lugares vazios da fila
+				getline(ficheiro, *UltNome);
+				getline(ficheiro, *AlunoouNao);
+				if (*AlunoouNao != "Staff") {
+					getline(ficheiro, *GrupoDep);
+					getline(ficheiro, *Curso);
+					getline(ficheiro, *numAlunoFunc);
+					getline(ficheiro, *duração);
+					getline(ficheiro, *plafond);
+					getline(ficheiro, *tamGrupo);
+					carregaAluno(*PriNome, *UltNome, *AlunoouNao, *GrupoDep, *Curso, *numAlunoFunc, *duração, *plafond, *tamGrupo, p, reserva, tamReserva);
+				}
+				else {
+					getline(ficheiro, *GrupoDep);
+					getline(ficheiro, *numAlunoFunc);
+					getline(ficheiro, *duração);
+					getline(ficheiro, *plafond);
+					getline(ficheiro, *tamGrupo);
+					carregaStaff(*PriNome, *UltNome, *GrupoDep, *numAlunoFunc, *duração, *plafond, *tamGrupo, p, reserva, tamReserva);
+				}
+				removidos[j] = p;
+			}
+			else {
+				removidos[j] = NULL;
+			}
+			delete PriNome, UltNome, GrupoDep, numAlunoFunc, duração, plafond, tamGrupo, AlunoouNao, Curso;
+		}
 	}
 	ficheiro.close();
 }
@@ -254,35 +417,35 @@ mesa** carregaCantina(mesa ** canteen, int numMesas, int*reserva, int tamReserva
 					pessoa**sit = new pessoa*[cap];
 					for (int j = 0; j < cap; j++) {
 						pessoa*p = new pessoa;
-						string PriNome;
-						string UltNome;
-						string AlunoouNao;
-						string GrupoDep;
-						string Curso;
-						string numAlunoFunc;
-						string duração;
-						string plafond;
-						string tamGrupo;
-						getline(ficheiro, PriNome);
-						if (PriNome != "-----NULL-----") {
-							getline(ficheiro, UltNome);
-							getline(ficheiro, AlunoouNao);
-							if (AlunoouNao != "Staff") {
-								getline(ficheiro, GrupoDep);
-								getline(ficheiro, Curso);
-								getline(ficheiro, numAlunoFunc);
-								getline(ficheiro, duração);
-								getline(ficheiro, plafond);
-								getline(ficheiro, tamGrupo);
-								carregaAluno(PriNome, UltNome, AlunoouNao ,GrupoDep, Curso, numAlunoFunc, duração, plafond, tamGrupo, p, reserva, tamReserva);
+						string* PriNome = new string;
+						string *UltNome = new string;
+						string *AlunoouNao = new string;
+						string *GrupoDep = new string;
+						string *Curso = new string;
+						string *numAlunoFunc = new string;
+						string *duração = new string;
+						string *plafond = new string;
+						string *tamGrupo = new string;
+						getline(ficheiro, *PriNome);
+						if (*PriNome != "-----NULL-----") {
+							getline(ficheiro, *UltNome);
+							getline(ficheiro, *AlunoouNao);
+							if (*AlunoouNao != "Staff") {
+								getline(ficheiro, *GrupoDep);
+								getline(ficheiro, *Curso);
+								getline(ficheiro, *numAlunoFunc);
+								getline(ficheiro, *duração);
+								getline(ficheiro, *plafond);
+								getline(ficheiro, *tamGrupo);
+								carregaAluno(*PriNome, *UltNome, *AlunoouNao ,*GrupoDep, *Curso, *numAlunoFunc, *duração, *plafond, *tamGrupo, p, reserva, tamReserva);
 							}
 							else{
-								getline(ficheiro, GrupoDep);
-								getline(ficheiro, numAlunoFunc);
-								getline(ficheiro, duração);
-								getline(ficheiro, plafond);
-								getline(ficheiro, tamGrupo);
-								carregaStaff(PriNome, UltNome, GrupoDep, numAlunoFunc, duração, plafond, tamGrupo, p, reserva,tamReserva);
+								getline(ficheiro, *GrupoDep);
+								getline(ficheiro, *numAlunoFunc);
+								getline(ficheiro, *duração);
+								getline(ficheiro,* plafond);
+								getline(ficheiro, *tamGrupo);
+								carregaStaff(*PriNome, *UltNome, *GrupoDep,* numAlunoFunc, *duração, *plafond,* tamGrupo, p, reserva,tamReserva);
 							}
 							sit[j] = p;
 							numSenta++;
@@ -290,6 +453,7 @@ mesa** carregaCantina(mesa ** canteen, int numMesas, int*reserva, int tamReserva
 						else {
 							sit[j] = NULL;
 						}
+						delete PriNome, UltNome, GrupoDep, numAlunoFunc, duração, plafond, tamGrupo, AlunoouNao, Curso;
 					}
 					if (i == 1) {
 						m->totalMesas = numMesas;
@@ -314,35 +478,35 @@ mesa** carregaCantina(mesa ** canteen, int numMesas, int*reserva, int tamReserva
 					pessoa**sit = new pessoa*[cap];
 					for (int j = 0; j < cap; j++) {
 						pessoa*p = new pessoa;
-						string PriNome;
-						string UltNome;
-						string AlunoouNao;
-						string GrupoDep;
-						string Curso;
-						string numAlunoFunc;
-						string duração;
-						string plafond;
-						string tamGrupo;
-						getline(ficheiro, PriNome);
-						if (PriNome != "-----NULL-----") {
-							getline(ficheiro, UltNome);
-							getline(ficheiro, AlunoouNao);
-							if (AlunoouNao != "Staff") {
-								getline(ficheiro, GrupoDep);
-								getline(ficheiro, Curso);
-								getline(ficheiro, numAlunoFunc);
-								getline(ficheiro, duração);
-								getline(ficheiro, plafond);
-								getline(ficheiro, tamGrupo);
-								carregaAluno(PriNome, UltNome, AlunoouNao, GrupoDep, Curso, numAlunoFunc, duração, plafond, tamGrupo, p, reserva, tamReserva);
+						string *PriNome = new string;
+						string *UltNome = new string;
+						string *AlunoouNao = new string;
+						string *GrupoDep = new string;
+						string *Curso = new string;
+						string *numAlunoFunc = new string;
+						string *duração = new string;
+						string *plafond = new string;
+						string *tamGrupo = new string;
+						getline(ficheiro, *PriNome);
+						if (*PriNome != "-----NULL-----") {
+							getline(ficheiro, *UltNome);
+							getline(ficheiro, *AlunoouNao);
+							if (*AlunoouNao != "Staff") {
+								getline(ficheiro, *GrupoDep);
+								getline(ficheiro, *Curso);
+								getline(ficheiro, *numAlunoFunc);
+								getline(ficheiro, *duração);
+								getline(ficheiro, *plafond);
+								getline(ficheiro, *tamGrupo);
+								carregaAluno(*PriNome, *UltNome, *AlunoouNao, *GrupoDep, *Curso, *numAlunoFunc, *duração, *plafond, *tamGrupo, p, reserva, tamReserva);
 							}
 							else {
-								getline(ficheiro, GrupoDep);
-								getline(ficheiro, numAlunoFunc);
-								getline(ficheiro, duração);
-								getline(ficheiro, plafond);
-								getline(ficheiro, tamGrupo);
-								carregaStaff(PriNome, UltNome, GrupoDep, numAlunoFunc, duração, plafond, tamGrupo, p, reserva, tamReserva);
+								getline(ficheiro, *GrupoDep);
+								getline(ficheiro, *numAlunoFunc);
+								getline(ficheiro, *duração);
+								getline(ficheiro, *plafond);
+								getline(ficheiro, *tamGrupo);
+								carregaStaff(*PriNome, *UltNome, *GrupoDep, *numAlunoFunc, *duração, *plafond, *tamGrupo, p, reserva, tamReserva);
 							}
 							sit[j] = p;
 							numSenta++;
@@ -350,6 +514,7 @@ mesa** carregaCantina(mesa ** canteen, int numMesas, int*reserva, int tamReserva
 						else {
 							sit[j] = NULL;
 						}
+						delete PriNome, UltNome, GrupoDep, numAlunoFunc, duração, plafond, tamGrupo, AlunoouNao, Curso;
 					}
 					m->totalMesas = NULL;
 					m->numSentados = numSenta;

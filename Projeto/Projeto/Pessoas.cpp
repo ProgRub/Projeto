@@ -70,7 +70,7 @@ pessoa** criaGrupo(string *pnomes, string *unomes, string*cursos, int*reserva, i
 	delete RETIRACURSO, PROBESP, DURAÇÃOMEAL, ALUNOOUNAO;
 }
 
-void escrevePessoa(pessoa *p) {//como o nome indica escreve a pessoa que recebe como argumento
+void escrevePessoaFila(pessoa *p) {//como o nome indica escreve a pessoa que recebe como argumento
 	if (p == NULL) {
 		cout << endl;
 	}
@@ -89,6 +89,25 @@ void escrevePessoa(pessoa *p) {//como o nome indica escreve a pessoa que recebe 
 	}
 }
 
+void escrevePessoaCantina(pessoa *p) {//como o nome indica escreve a pessoa que recebe como argumento
+	if (p == NULL) {
+		cout << endl;
+	}
+	else {
+		if (p->membro_aluno.num > 0) {
+			if (!p->membro_aluno.especialOuNao) {
+				cout << p->priNome << " " << p->ultNome << ", Estudante, Grupo " << p->numDepartamentoOuGrupo << ", " << p->membro_aluno.curso << ", " << p->membro_aluno.num << " (ciclos restantes: " << p->duração << ")" << endl;
+			}
+			else {
+				cout << p->priNome << " " << p->ultNome << ", Estudante (especial), Grupo " << p->numDepartamentoOuGrupo << ", " << p->membro_aluno.curso << ", " << p->membro_aluno.num << " (ciclos restantes: " << p->duração << ")" << endl;
+			}
+		}
+		else {
+			cout << p->priNome << " " << p->ultNome << ", Staff, Departamento " << p->numDepartamentoOuGrupo << ", " << p->membro_staff.numFuncionario << " (ciclos restantes: " << p->duração << ")" << endl;
+		}
+	}
+}
+
 void criaFila(pessoa**fila, int tam) {//vai por todos os lugares num vetor de pessoa* como NULL para ser mais fácil o manuseamento do vetor
 	int i = 0;
 	for (int i = 0; i < tam; i++) {
@@ -99,16 +118,25 @@ void criaFila(pessoa**fila, int tam) {//vai por todos os lugares num vetor de pe
 void preencheFila(pessoa**fila, string* pnomes, string*unomes, string*cursos, int *pos,int*reserva, int tamRes) {//vai preencher a fila, gerando um grupo de pessoas para os lugares vazios
 	int j = 0;
 	pessoa**g = criaGrupo(pnomes, unomes, cursos,reserva,tamRes);
-	int*tam = new int(g[0]->tamanho);
+	int subtrai;
+	int y = 0;
 	while (*pos < 50) {
-		if (j < *tam) {
+		if (j < g[0]->tamanho) {
 			fila[*pos] = g[j];
 			j++;
 			(*pos)++;
 		}
 		else {
 			g = criaGrupo(pnomes, unomes, cursos, reserva, tamRes);
-			*tam = g[0]->tamanho;
+			subtrai = 50 - *pos;
+			if (g[0]->tamanho > subtrai) {//para evitar problemas quando tivermos a verificar para vagas
+				while (y < 50 - *pos) {
+					g[y]->tamanho = subtrai;
+					y++;
+					subtrai--;
+				}
+			}
+			y = 0;
 			j = 0;
 		}
 	}
@@ -119,14 +147,14 @@ void escreveFila(pessoa**fila, int tam) {//como o nome indica escreve um vetor d
 	int i = 0;
 	while (i < tam) {
 		cout << i + 1 << ". ";
-		escrevePessoa(fila[i]);
+		escrevePessoaFila(fila[i]);
 		i++;
 	}
 }
 
 void alterarPlafond(pessoa**fila) {// opção 4, altera o plafond de uma pessoa na fila de espera pelo número de aluno ou de funcionário
 	int n;
-	cout << "Insira um número: " << endl;
+	cout << "Insira um número de aluno/funcionário: " << endl;
 	cin >> n;
 	int i = 0;
 	for (i; i < 50; i++) {
@@ -189,5 +217,72 @@ void testaGrupoDep(int * num, int * reserva, int tam){// vê se o número de grupo
 			reserva[i] = *num;
 			i = 100;
 		}
+	}
+}
+
+void ordenaAlfabeticamentePriNome(pessoa ** removidos, int pessoasRemovidos){
+	mergeSortAlfabeticamentePriNome(removidos, pessoasRemovidos);//usa-se uma adaptação do mergeSort pois é um dos mais eficientes algoritmos de ordenação
+	system("CLS");
+	cout << "Pessoas que estiveram na fila, mas não tinham dinheiro suficiente e foram removidos, ordenadas pelo primeiro nome:" << endl << endl;
+	escreveFila(removidos, pessoasRemovidos);
+}
+
+int contaRemovidos(pessoa ** removidos){
+	int soma = 0;
+	int i = 0;
+	while (i < 100) {
+		if (removidos[i] != NULL) {
+			soma++;
+			i++;
+		}
+		else {
+			break;
+		}
+	}
+	return soma;
+}
+
+void mergeSortAlfabeticamentePriNome(pessoa ** removidos, int tam){
+	if (tam < 2) {
+		return;
+	}
+	int mid = tam / 2;
+	pessoa **left = new pessoa*[mid];
+	pessoa**right = new pessoa*[tam - mid];
+	for (int i = 0; i < mid; i++) {
+		left[i] = removidos[i];
+	}
+	for (int j = mid; j < tam; j++) {
+		right[j - mid] = removidos[j];
+	}
+	mergeSortAlfabeticamentePriNome(left, mid);
+	mergeSortAlfabeticamentePriNome(right, tam - mid);
+	mergeRemovidos(left, right, removidos, mid, tam - mid, tam);
+}
+
+void mergeRemovidos(pessoa ** left, pessoa ** right, pessoa ** removidos, int n_left, int n_right, int tam){
+	int i = 0;
+	int j = 0;
+	int k = 0;
+	while (i < n_left && j < n_right) {
+		if (left[i]->priNome < right[j]->priNome) {
+			removidos[k] = left[i];
+			i++;
+		}
+		else {
+			removidos[k] = right[j];
+			j++;
+		}
+		k++;
+	}
+	while (i < n_left) {
+		removidos[k] = left[i];
+		k++;
+		i++;
+	}
+	while (j < n_right) {
+		removidos[k] = right[j];
+		j++;
+		k++;
 	}
 }

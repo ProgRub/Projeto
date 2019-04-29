@@ -31,8 +31,13 @@ int main() {
 	mesa **cantina = criaCantina();
 	bool sair = false;
 	criaFila(fila, 50);
-	preencheFila(fila, PNOMES, UNOMES, CURSOS, pos, reserva, 400);
+	cout << "\t\t\t\t\t Cantina EDA\n";
 	refeição*r = novaMeal(true);
+	preencheFila(fila, PNOMES, UNOMES, CURSOS, pos, reserva, 400);/*
+	escreveFila(fila, 50);
+	removeSemDinheiro(fila, r, pos, removidos, 100);
+	escreveFila(fila, 50);
+	system("pause");*/
 	while (!sair) {
 		system("CLS");
 		char opcao;
@@ -46,11 +51,11 @@ int main() {
 		cin >> opcao;
 		switch (opcao) {
 		case 's':
-			cout << "\t\t\t\t\t Cantina EDA\n";
 			cout << endl;
 			contaCiclo++;
 			removeDuração(cantina);
 			removeAcabados(cantina, acabados, 100, r);
+			escreveFila(fila, 50);
 			preencheCantina(cantina, fila, pos, r,removidos,100);
 			preencheFila(fila, PNOMES, UNOMES, CURSOS, pos, reserva, 400);
 			escreveMeal(r);
@@ -63,17 +68,15 @@ int main() {
 			break;
 
 		case 'e'://opcao dentro da emergencia para escolher entre grupo ou aluno a abandonar
-			cout << " Escolheu Emergência\n";
+			cout << " ***** EMERGÊNCIA *****" << endl;
 			cout << " Escolha a opção:\n1 - Remover Aluno/Funcionário\n2 - Remover Grupo/departamento\n";
 			cin >> opcao1;
 			switch (opcao1) {
 			case (1):
 				escreveCantina(cantina);
-				escreveFila(fila,50);
 				retiraEmergPessoa(cantina, acabados, 100, r);
 				preencheCantina(cantina, fila, pos, r, removidos, 100);
 				(*pos)--;
-				escreveCantina(cantina);
 				break;
 			case (2):
 				escreveCantina(cantina);
@@ -90,6 +93,8 @@ int main() {
 			gravaRefeição(r);
 			gravaCantina(cantina);
 			gravaFila(fila, 50);
+			gravaAcabados(acabados, 100);
+			gravaRemovidos(removidos, 100);
 			cout << "Gravado com sucesso!" << endl;
 			system("pause");
 			break;
@@ -97,9 +102,18 @@ int main() {
 			cout << " Escolheu Carregar Dados\n";
 			criaVetor(reserva, 400);
 			criaFila(fila, 50);
+			criaFila(acabados, 100);
+			criaFila(removidos, 100);
 			carregaRefeição(r);
 			cantina = carregaCantina(cantina, contaCantina(), reserva,400);
+			for (int q = 0; q < cantina[0]->totalMesas; q++) {//para não haver problemas se o utilizador pretender a opção 1 após carregar os dados
+				for (int r = 0; r < cantina[q]->tamanho; r++) {
+					nullsNoFimCantina(cantina[q]->sentados, r, cantina[q]->tamanho);
+				}
+			}
 			carregaFila(fila, 50, pos, reserva, 400);
+			carregaAcabados(acabados, 100, reserva, 400);
+			carregaRemovidos(removidos, 100, reserva, 400);
 			escreveMeal(r);
 			escreveCantina(cantina);
 			escreveFila(fila, 50);
@@ -107,23 +121,37 @@ int main() {
 			system("pause");
 			break;
 		case 'o':
-			cout << " Escolheu Opções \n";
-			cout << " Escolha a opção:\n1 - Mostrar todos os indivíduos do sistema\n2 - Mostrar todas as mesas\n3 - Mostrar todos os indivíduos rejeitados por falta de plafond\n4 - Alterar o plafond do indivíduo enquanto este está na fila\n5 - Apresentação dos indivíduos de um determinado departamento\n6 - Editar a duração da refeição de um grupo/departamento\n7 - Pesquisa de indivíduos com base no seu id\n8 - Editar nome de um indivíduo\n";
+			cout << " Escolheu Opções" << endl;
+			cout << " Escolha a opção:" << endl;
+			cout << "1 - Mostrar todos os indivíduos do sistema ordenados alfabeticamente pelo último nome" << endl;
+			//cout << "2 - Mostrar todas as mesas ordenadas pelo número de pessoas sentadas" << endl;
+			cout << "3 - Mostrar todos os indivíduos rejeitados por falta de plafond ordenados alfabeticamente pelo primeiro nome" << endl;
+			cout << "4 - Alterar o plafond do indivíduo enquanto este está na fila" << endl;
+			//cout << "5 - Apresentação dos indivíduos de um determinado departamento" << endl;
+			//cout << "6 - Editar a duração da refeição de um grupo / departamento" << endl;
+			//cout << "7 - Pesquisa de indivíduos com base no seu id" << endl;
+			//cout << "8 - Editar nome de um indivíduo" << endl;
 			cin >> opcao2;
 			switch (opcao2) {
 			case (1):
+				for (int q = 0; q < cantina[0]->totalMesas; q++) {//para não haver problemas se o utilizador pretender a opção 1 após carregar os dados
+					for (int r = 0; r < cantina[q]->tamanho; r++) {
+						nullsNoFimCantina(cantina[q]->sentados, r, cantina[q]->tamanho);
+					}
+				}
 				ordenaAlfabeticamenteUltNome(cantina, fila, acabados, contaPessoasCantina(cantina), contaPessoasFila(fila), contaAcabados(acabados));
-				//mostrar todos os individuos do sistema ordenados alfabeticamente pelo último nome
 				break;
 			case (2):
-				//mostrar todas as mesas
+				//mergeSortMesasNumSentados(cantina, cantina[0]->totalMesas);
+				//escreveCantina(cantina);
+				//reverseOrdenação(cantina, cantina[0]->totalMesas);
 				break;
 			case (3):
-				//mostrar todos os individos rejeitados por falta de plafond
+				ordenaAlfabeticamentePriNome(removidos, contaRemovidos(removidos));
 				break;
 			case (4):
 				escreveFila(fila, 50);
-				alterarPlafond(fila);//alterar o plafond do individuo em espera na fila
+				alterarPlafond(fila);
 				break;
 			case (5):
 				//apresentaçao dos individuos de determinado curso

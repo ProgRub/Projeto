@@ -36,9 +36,13 @@ void ordenaAlfabeticamenteUltNome(mesa**cantina, pessoa**fila, pessoa**acabados,
 int contaPessoasCantina(mesa**cantina);
 int contaPessoasFila(pessoa**fila);
 int contaAcabados(pessoa**acabados);
-void mergeSortAlfabeticamenteUltNome(pessoa**sistema, int m);
-void merge(pessoa**left, pessoa**right, pessoa**sistema, int n_left, int n_right, int m);
+void mergeSortAlfabeticamenteUltNome(pessoa**sistema, int tam);
+void mergeUltNome(pessoa**left, pessoa**right, pessoa**sistema, int n_left, int n_right, int tam);
 void adicionaVetorRemovidos(pessoa**removidos, pessoa*p, int tam);
-void removeSemDinheiro(pessoa**fila, refeição *r, int*pos, pessoa**removidos, int tamRemovidos, int tamEntrada);
-void removeSemDinheiroPessoa(pessoa**fila, int*pos, pessoa**removidos, int tamRemovidos, int posiPessoa);
+void removeSemDinheiro(pessoa**fila, refeição *r, int*pos, pessoa**removidos, int tamRemovidos);
+void removeSemDinheiroPessoa(pessoa**fila, int*pos, pessoa**removidos, int tamRemovidos, int posiPessoa, int numDepGrupo);
 void removeSemDinheiroGrupo(pessoa**fila, int*pos, pessoa**removidos, int tamRemovidos, int numDepGrupo);
+void mergeSortMesasNumSentados(mesa ** cantina, int tam);
+void mergeMesas(mesa ** left, mesa ** right, mesa ** cantina, int n_left, int n_right, int tam);
+void reverseOrdenação(mesa**cantina, int tam);
+void mergeReverseOrdenação(mesa ** left, mesa ** right, mesa ** cantina, int n_left, int n_right, int tam);
