@@ -185,7 +185,7 @@ void escreveOpções(pessoa**v, int tam) {
 
 void alterarPlafond(pessoa**fila) {// opção 4, altera o plafond de uma pessoa na fila de espera pelo número de aluno ou de funcionário
 	int n;
-	cout << "Insira um número de aluno/funcionário: " << endl;
+	cout << endl <<"Insira um número de aluno/funcionário: " << endl;
 	cin >> n;
 	int i = 0;
 	for (i; i < 50; i++) {
@@ -195,7 +195,6 @@ void alterarPlafond(pessoa**fila) {// opção 4, altera o plafond de uma pessoa na
 					cout << "Plafond inicial: " << fila[i]->plafond << " EUR" << endl;
 					cout << "Insira um novo plafond: ";
 					cin >> fila[i]->plafond;
-					cout << "Plafond atual: " << fila[i]->plafond << " EUR" << endl;
 					break;
 				}
 			}
@@ -204,7 +203,6 @@ void alterarPlafond(pessoa**fila) {// opção 4, altera o plafond de uma pessoa na
 					cout << "Plafond inicial: " << fila[i]->plafond << " EUR" << endl;
 					cout << "Insira um novo plafond: ";
 					cin >> fila[i]->plafond;
-					cout << "Plafond atual: " << fila[i]->plafond << " EUR" << endl;
 					break;
 				}
 			}
@@ -214,7 +212,7 @@ void alterarPlafond(pessoa**fila) {// opção 4, altera o plafond de uma pessoa na
 		}
 	}
 	if (i == 50) {
-		cout << "Não válido" << endl;
+		cout << "Ninguém na fila tem o número de aluno / funcionário que inseriu" << endl;
 	}
 }
 
@@ -256,6 +254,7 @@ void testaGrupoDep(int * num, int * reserva, int tam){// vê se o número de grupo
 void ordenaAlfabeticamentePriNome(pessoa ** removidos, int pessoasRemovidos){
 	mergeSortAlfabeticamentePriNome(removidos, pessoasRemovidos);//usa-se uma adaptação do mergeSort pois é um dos mais eficientes algoritmos de ordenação
 	system("CLS");
+	cout << "\t\t\t\t\t Cantina EDA" << endl;
 	cout << "Pessoas que estiveram na fila, mas não tinham dinheiro suficiente e foram removidos, ordenadas pelo primeiro nome:" << endl << endl;
 	escreveOpções(removidos, pessoasRemovidos);
 }

@@ -1,13 +1,9 @@
 ﻿  Ficheiros.cpp
 c:\users\35196\desktop\onedrive - universidade da madeira\universidade\2º semestre\eda\projeto\projeto\projeto\ficheiros.cpp(217): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
 c:\users\35196\desktop\onedrive - universidade da madeira\universidade\2º semestre\eda\projeto\projeto\projeto\ficheiros.cpp(246): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-c:\users\35196\desktop\onedrive - universidade da madeira\universidade\2º semestre\eda\projeto\projeto\projeto\ficheiros.cpp(553): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\users\35196\desktop\onedrive - universidade da madeira\universidade\2º semestre\eda\projeto\projeto\projeto\ficheiros.cpp(551): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
   Main.cpp
 c:\users\35196\desktop\onedrive - universidade da madeira\universidade\2º semestre\eda\projeto\projeto\projeto\main.cpp(12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
 c:\users\35196\desktop\onedrive - universidade da madeira\universidade\2º semestre\eda\projeto\projeto\projeto\main.cpp(26): warning C4101: 'tamCantina': unreferenced local variable
-  Mesas.cpp
-  Pessoas.cpp
-c:\users\35196\desktop\onedrive - universidade da madeira\universidade\2º semestre\eda\projeto\projeto\projeto\pessoas.cpp(45): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-c:\users\35196\desktop\onedrive - universidade da madeira\universidade\2º semestre\eda\projeto\projeto\projeto\pessoas.cpp(62): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
   Generating Code...
   Projeto.vcxproj -> C:\Users\35196\Desktop\OneDrive - Universidade da Madeira\Universidade\2º Semestre\EDA\Projeto\Projeto\Debug\Projeto.exe

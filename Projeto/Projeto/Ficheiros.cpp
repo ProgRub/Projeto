@@ -422,7 +422,6 @@ mesa** carregaCantina(mesa ** canteen, int numMesas, int*reserva, int tamReserva
 					m->numMesa = i;
 					m->tamanho = cap;
 					m->numSentados = numSenta;
-					cout << m->numSentados << endl;
 					pessoa**sit = new pessoa*[cap];
 					for (int j = 0; j < cap; j++) {
 						pessoa*p = new pessoa;
@@ -484,7 +483,6 @@ mesa** carregaCantina(mesa ** canteen, int numMesas, int*reserva, int tamReserva
 					m->numMesa = i;
 					m->tamanho = cap;
 					m->numSentados = numSenta;
-					cout << m->numSentados << endl;
 					pessoa**sit = new pessoa*[cap];
 					for (int j = 0; j < cap; j++) {
 						pessoa*p = new pessoa;

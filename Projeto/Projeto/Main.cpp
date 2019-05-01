@@ -42,7 +42,7 @@ int main() {
 		cout << "Escolha uma opcao:" << endl;
 		cout << "(s) Seguinte\t";
 		cout << "(e) Emergência\t";
-		cout << "(g) Gravar\t";
+		cout << "(g) Gravar dados\t";
 		cout << "(c) Carregar dados\t";
 		cout << "(o) Opções" << endl << endl;
 		cout << "**** Comando: ";
@@ -98,7 +98,6 @@ int main() {
 			system("pause");
 			break;
 		case 'c':
-			cout << " Escolheu Carregar Dados" << endl;
 			criaVetor(reserva, 400);
 			criaFila(fila, 50);
 			criaFila(acabados, 100);
@@ -115,16 +114,15 @@ int main() {
 			system("pause");
 			break;
 		case 'o':
-			cout << " Escolheu Opções" << endl;
-			cout << " Escolha a opção:" << endl;
+			cout << endl<< " Escolha a opção:" << endl;
 			cout << "1 - Mostrar todos os indivíduos do sistema ordenados alfabeticamente pelo último nome" << endl;
 			//cout << "2 - Mostrar todas as mesas ordenadas pelo número de pessoas sentadas" << endl;
 			cout << "3 - Mostrar todos os indivíduos rejeitados por falta de plafond ordenados alfabeticamente pelo primeiro nome" << endl;
 			cout << "4 - Alterar o plafond do indivíduo enquanto este está na fila" << endl;
 			//cout << "5 - Apresentação dos indivíduos de um determinado curso / departamento" << endl;
-			//cout << "6 - Editar a duração da refeição de um grupo / departamento" << endl;
+			cout << "6 - Editar a duração da refeição de um grupo / departamento" << endl;
 			//cout << "7 - Pesquisa de indivíduos com base no seu número de funcionário / aluno" << endl;
-			//cout << "8 - Editar nome de um indivíduo" << endl;
+			cout << "8 - Editar nome de um indivíduo" << endl << endl;
 			cout << "**** Comando: ";
 			cin >> opcao2;
 			switch (opcao2) {
@@ -132,7 +130,6 @@ int main() {
 				ordenaAlfabeticamenteUltNome(cantina, fila, acabados, contaPessoasCantina(cantina), contaPessoasFila(fila), contaAcabados(acabados));
 				break;
 			case (2):
-				//escreveCantina(bubbleSortMesasNumSentados(cantina, cantina[0]->totalMesas));
 				break;
 			case (3):
 				ordenaAlfabeticamentePriNome(removidos, contaRemovidos(removidos));
@@ -145,13 +142,18 @@ int main() {
 				//apresentaçao dos individuos de determinado curso
 				break;
 			case (6):
+				escreveCantina(cantina);
+				escreveFila(fila, 50);
+				editaDuração(cantina, fila, 50);
 				//editar a duração de uma refeição de um grupo/departamento
 				break;
 			case (7):
 				//pesquisa com base no numero de aluno
 				break;
 			case (8):
-				//editar o nome de um individuo
+				escreveCantina(cantina);
+				escreveFila(fila, 50);
+				mudaNome(cantina, fila, 50);
 				break;
 			}
 			system("pause");

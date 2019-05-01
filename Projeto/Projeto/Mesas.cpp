@@ -326,6 +326,7 @@ void ordenaAlfabeticamenteUltNome(mesa**cantina, pessoa**fila, pessoa**acabados,
 	}
 	mergeSortAlfabeticamenteUltNome(sistema, total);//usa-se uma adaptaÁ„o do mergeSort pois È um dos mais eficientes algoritmos de ordenaÁ„o
 	system("CLS");
+	cout << "\t\t\t\t\t Cantina EDA" << endl;
 	cout << "Pessoas que est„o na fila, est„o na cantina e que j· terminaram a sua refeiÁ„o, ordenadas alfabeticamente pelo ˙ltimo nome:" << endl << endl;
 	escreveOpÁıes(sistema, total);
 }
@@ -456,6 +457,7 @@ void removeSemDinheiro(pessoa**fila, refeiÁ„o *r, int*pos, pessoa**removidos, in
 	if (h·Pessoa) {
 		cout << "**** Comando: ";
 		cin >> indiOuGrupo;
+		cout << endl;
 		switch (indiOuGrupo)
 		{
 		case(1):
@@ -566,4 +568,165 @@ void vagasPossiveis(int*vagasPossiveis, pessoa*p, mesa**cantina, int k, int vaga
 		}
 	}
 	delete cursoVagas;
+}
+
+void mudaNome(mesa**cantina, pessoa**fila, int tamFila) {
+	int PriOuUltOuAmbos;
+	int n;
+	bool h·PessoaCantina = false;
+	bool h·PessoaFila = false;
+	int mesaPessoa;
+	int posiÁ„o;
+	bool restarta = true;
+	cout << endl << "Escreva o n˙mero de aluno / funcion·rio do indivÌduo ao qual deseja alterar o nome" << endl;
+	cout << "**** Comando: ";
+	cin >> n;
+	for (int i = 0; i < cantina[0]->totalMesas; i++) {
+		for (int j = 0; j < cantina[i]->tamanho; j++) {
+			if (cantina[i]->sentados[j] != NULL) {
+				if (cantina[i]->sentados[j]->membro_aluno.num > 0) {
+					if (cantina[i]->sentados[j]->membro_aluno.num == n) {
+						h·PessoaCantina = true;
+						posiÁ„o = j;
+						break;
+					}
+				}
+				else {
+					if (cantina[i]->sentados[j]->membro_staff.numFuncionario == n) {
+						h·PessoaCantina = true;
+						posiÁ„o = j;
+						break;
+					}
+				}
+			}
+		}
+		if (h·PessoaCantina) {
+			mesaPessoa = i;
+			i = cantina[0]->totalMesas;
+		}
+	}
+	if (!h·PessoaCantina) {
+		for (int u = 0; u < tamFila; u++) {
+			if (fila[u] != NULL) {
+				if (fila[u]->membro_aluno.num > 0) {
+					if (fila[u]->membro_aluno.num == n) {
+						h·PessoaFila = true;
+						posiÁ„o = u;
+						break;
+					}
+				}
+				else {
+					if (fila[u]->membro_staff.numFuncionario == n) {
+						h·PessoaFila = true;
+						posiÁ„o = u;
+						break;
+					}
+				}
+			}
+		}
+	}
+	if (h·PessoaFila || h·PessoaCantina) {
+		cout << endl << "Deseja alterar" << endl << "\t1. O primeiro nome" << endl << "\t2. O ˙ltimo nome" << endl << "\t3. Ambos os nomes do indivÌduo" << endl;
+		cout << "**** Comando: ";
+		cin >> PriOuUltOuAmbos;
+		while (restarta) {
+			switch (PriOuUltOuAmbos)
+			{
+			case 1:
+				if (h·PessoaCantina) {
+					cout << "Escreva o novo primeiro nome do indivÌduo" << endl << "Novo primeiro nome: ";
+					cin.get();
+					getline(cin, cantina[mesaPessoa]->sentados[posiÁ„o]->priNome);
+				}
+				else {
+					cout << "Escreva o novo primeiro nome do indivÌduo" << endl << "Novo primeiro nome: ";
+					cin.get();
+					getline(cin, fila[posiÁ„o]->priNome);
+				}
+				restarta = false;
+				break;
+			case 2:
+				if (h·PessoaCantina) {
+					cout << "Escreva o novo ˙ltimo nome do indivÌduo" << endl << "Novo ˙ltimo nome: ";
+					cin.get();
+					getline(cin, cantina[mesaPessoa]->sentados[posiÁ„o]->ultNome);
+				}
+				else {
+					cout << "Escreva o novo ˙ltimo nome do indivÌduo" << endl << "Novo ˙ltimo nome: ";
+					cin.get();
+					getline(cin, fila[posiÁ„o]->ultNome);
+				}
+				restarta = false;
+				break;
+			case 3:
+				if (h·PessoaCantina) {
+					cout << "Escreva o novo primeiro nome do indivÌduo" << endl << "Novo primeiro nome: ";
+					cin.get();
+					getline(cin, cantina[mesaPessoa]->sentados[posiÁ„o]->priNome);
+					cout << "Escreva o novo ˙ltimo nome do indivÌduo" << endl << "Novo ˙ltimo nome: ";
+					cin.get();
+					getline(cin, cantina[mesaPessoa]->sentados[posiÁ„o]->ultNome);
+				}
+				else {
+					cout << "Escreva o novo primeiro nome do indivÌduo" << endl << "Novo primeiro nome: ";
+					cin.get();
+					getline(cin, fila[posiÁ„o]->priNome);
+					cout << "Escreva o novo ˙ltimo nome do indivÌduo" << endl << "Novo ˙ltimo nome: ";
+					cin.get();
+					getline(cin, fila[posiÁ„o]->ultNome);
+				}
+				restarta = false;
+				break;
+			default:
+				cout << "Isso n„o È uma das opÁıes" << endl;
+				break;
+			}
+		}
+	}
+	else {
+		cout << "Essa pessoa n„o se encontra nem na cantina nem na fila de espera." << endl;
+	}
+}
+
+void editaDuraÁ„o(mesa** cantina, pessoa**fila, int tamFila) {
+	int num; 
+	int novaDuraÁ„o;
+	bool tentaOutraVez = true;
+	bool h·GrupoCantina = false;
+	bool h·GrupoFila = false;
+	cout << "Escreva o n˙mero do grupo / departamento ao qual deseja alterar a duraÁ„o de refeiÁ„o" << endl << "**** Comando: ";
+	cin >> num;
+	while (tentaOutraVez) {
+		cout << endl << "Escreva a nova duraÁ„o de refeiÁ„o dos elementos do grupo / departamento" << endl << "**** Comando: ";
+		cin >> novaDuraÁ„o;
+		if (novaDuraÁ„o <= 0) {
+			cout << "A nova duraÁ„o tem de ser maior que 0!" << endl << endl;
+		}
+		else {
+			tentaOutraVez = false;
+		}
+	}
+	for (int i = 0; i < cantina[0]->totalMesas; i++) {
+		for (int j = 0; j < cantina[i]->tamanho; j++) {
+			if (cantina[i]->sentados[j] != NULL) {
+				if (cantina[i]->sentados[j]->numDepartamentoOuGrupo == num) {
+					cantina[i]->sentados[j]->duraÁ„o = novaDuraÁ„o;
+					h·GrupoCantina = true;
+				}
+			}
+		}
+	}
+	if (!h·GrupoCantina) {
+		for (int u = 0; u < tamFila; u++) {
+			if (fila[u] != NULL) {
+				if (fila[u]->numDepartamentoOuGrupo == num) {
+					fila[u]->duraÁ„o = novaDuraÁ„o;
+					h·GrupoFila = true;
+				}
+			}
+		}
+	}
+	if (!h·GrupoCantina && !h·GrupoFila) {
+		cout << "Esse grupo / departamento n„o est· nem na cantina nem na fila" << endl;
+	}
 }

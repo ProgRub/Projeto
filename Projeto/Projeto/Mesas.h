@@ -42,5 +42,6 @@ void removeSemDinheiro(pessoa**fila, refeição *r, int*pos, pessoa**removidos, in
 void removeSemDinheiroPessoa(pessoa**fila, int*pos, pessoa**removidos, int tamRemovidos, int posiPessoa, int numDepGrupo);
 void removeSemDinheiroGrupo(pessoa**fila, int*pos, pessoa**removidos, int tamRemovidos, int numDepGrupo);
 mesa** bubbleSortMesasNumSentados(mesa**cantina, int tam);
-void reverseOrdenação(mesa**cantina, int tam);
 void vagasPossiveis(int*vagasPossiveis, pessoa*p, mesa**cantina, int k, int vagas);
+void mudaNome(mesa**cantina, pessoa**fila, int tamFila);
+void editaDuração(mesa** cantina, pessoa**fila, int tamFila);
