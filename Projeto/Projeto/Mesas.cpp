@@ -11,7 +11,7 @@ refeição* novaMeal(bool primeiraVez) {//vai receber os dados do utilizador para 
 		system("pause");
 		cin.get();
 	}
-	cout << "***** REFEIÇÃO NOVA *****\nA cantina EDA necessita de uma nova refeição\n\t1. Introduza a entrada:" << endl;
+	cout << "***** REFEIÇÃO NOVA *****"<< endl << "A cantina EDA necessita de uma nova refeição" << endl << "\t1. Introduza a entrada:" << endl;
 	getline(cin, meal->entrada);
 	cout << "\t2. Introduza o prato principal:" << endl;
 	getline(cin, meal->pratoMain);
@@ -21,7 +21,7 @@ refeição* novaMeal(bool primeiraVez) {//vai receber os dados do utilizador para 
 }
 
 void escreveMeal(refeição *r) {//escreve a refeição atual
-	cout << "Refeição atual:\n\tEntrada: " << r->entrada << "\n\tPrato Principal: " << r->pratoMain << "\n\tCusto:" << r->custo << "€" << endl << endl;
+	cout << "Refeição atual:\n\tEntrada: " << r->entrada << "\n\tPrato Principal: " << r->pratoMain << "\n\tCusto:" << r->custo << " EUR" << endl << endl;
 }
 
 mesa** criaCantina() {//vai obter o tamanho da cantina e gerar tamanhos de mesas até a cantina estar preenchida, tamanhos guardados num vetor
@@ -87,22 +87,19 @@ void preencheCantina(mesa**cantina, pessoa**fila, int *pos, refeição*r, pessoa**
 	for (int k = 0; k < cantina[0]->totalMesas; k++) {
 		procuraEspecial(fila, 50);
 		removeSemDinheiro(fila, r, pos, removidos, tamRemovidos);
-		for (int u = 0; u < cantina[k]->tamanho; u++) {
-			nullsNoFimCantina(cantina[k]->sentados, u, cantina[k]->tamanho);//certifica que todos os NULLs estão nos últimos lugares da mesa
-		}
 		if (cantina[k]->numSentados == 0) {//no caso de não haver pessoas na mesa acrescenta-se uma pessoa à mesa
 			if (fila[ind] != NULL) {
 				vagasPossiveis(vagasP, fila[ind], cantina, k, vagas);
 			}
-			if (fila[ind] != NULL && *vagasP < fila[ind]->tamanho) {
-				while (fila[ind] != NULL && *vagasP < fila[ind]->tamanho) {
+			if (fila[ind] != NULL && *vagasP < fila[ind]->tamanho && ind < 50) {
+				while (fila[ind] != NULL && *vagasP < fila[ind]->tamanho && ind < 50) {
 					ind += fila[ind]->tamanho;
-					if (fila[ind] != NULL) {
+					if (fila[ind] != NULL && ind < 50) {
 						vagasPossiveis(vagasP, fila[ind], cantina, k, vagas);
 					}
 				}
 			}
-			if (fila[ind] != NULL) {
+			if (fila[ind] != NULL && ind < 50) {
 				cantina[k]->sentados[0] = fila[ind];
 				fila[ind] = NULL;
 				nullsNoFim(fila, ind, pos);
@@ -123,25 +120,25 @@ void preencheCantina(mesa**cantina, pessoa**fila, int *pos, refeição*r, pessoa**
 				}
 			}
 			for (int i = 0; i < cantina[k]->tamanho; i++) {
-				if (fila[ind] != NULL) {
+				if (fila[ind] != NULL && ind < 50) {
 					vagasPossiveis(vagasP, fila[ind], cantina, k, vagas);
 				}
-				if (fila[ind] != NULL) {
-					if (*vagasP < fila[ind]->tamanho) {
-						while (fila[ind] != NULL && *vagasP < fila[ind]->tamanho) {
+				if (fila[ind] != NULL && ind < 50) {
+					if (*vagasP < fila[ind]->tamanho && ind < 50) {
+						while (fila[ind] != NULL && *vagasP < fila[ind]->tamanho && ind < 50) {
 							ind += fila[ind]->tamanho; 
-							if (fila[ind] != NULL) {
+							if (fila[ind] != NULL && ind < 50) {
 								vagasPossiveis(vagasP, fila[ind], cantina, k, vagas);
 							}
 							inicio = ind;
 						}
-						if (fila[ind] != NULL && *vagasP >= fila[ind]->tamanho) {
+						if (fila[ind] != NULL && *vagasP >= fila[ind]->tamanho && ind < 50) {
 							ind = inicio;//para certificar que entram as pessoas certas na cantina
 						}
 					}
 				}
 				if (cantina[k]->sentados[i] == NULL) {
-					if (fila[ind] != NULL) {
+					if (fila[ind] != NULL && ind < 50) {
 						if (*cursoSenta != "nãoconta") {
 							if (fila[ind]->membro_aluno.num > 0) {
 								if (fila[ind]->membro_aluno.curso == *cursoSenta) {
@@ -166,19 +163,14 @@ void preencheCantina(mesa**cantina, pessoa**fila, int *pos, refeição*r, pessoa**
 							}
 						}
 						else {
+							if (fila[ind]->membro_aluno.num > 0) {
+								*cursoSenta = fila[ind]->membro_aluno.curso;
+							}
 							cantina[k]->sentados[i] = fila[ind];
 							fila[ind] = NULL;
 							nullsNoFim(fila, ind, pos);
 							(cantina[k]->numSentados)++;
 							(vagas)--;
-							if (fila[ind + 1] != NULL) {
-								if ((fila[ind]->membro_aluno.num > 0 && fila[ind + 1]->membro_aluno.num > 0) && (fila[ind]->membro_aluno.curso != fila[ind + 1]->membro_aluno.curso)) {
-									i = 100;
-								}
-							}
-							else {
-								i = 100;
-							}
 						}
 					}
 					else {
@@ -199,7 +191,7 @@ void escreveCantina(mesa ** cantina) {//vai escrever a cantina como diz no nome
 		for (int j = 0; j < cantina[i]->tamanho; j++) {
 			escrevePessoaCantina(cantina[i]->sentados[j]);
 		}
-		cout << endl;
+		cout << "---------------------------------------------------------------------------------------------------" << endl;
 	}
 }
 
@@ -210,21 +202,10 @@ void nullsNoFim(pessoa**fila, int beg, int *end) {//quando se passa uma pessoa d
 	(*end)--;//evita swaps desnecessários 
 }
 
-void nullsNoFimCantina(pessoa**sentados, int beg, int end) {//mesma coisa que a versão anterior, só que pondo os NULLs gerados de retirar as pessoas que acabam da mesa nas últimas posições da mesa, para ser mais fácil aceder às pessoas sentadas na mesa
-	for (beg; beg <= (end - 2); beg++) {
-		if (sentados[beg] == NULL) {
-			swap(sentados[beg], sentados[beg + 1]);
-		}
-	}
-
-}
-
 void removeDuração(mesa **cantina) {//como o nome indica, com cada ciclo remove 1 à duração
-	int i = 0;
-	int j;
-	for (i; i < cantina[0]->totalMesas; i++) {
+	for (int i = 0; i < cantina[0]->totalMesas; i++) {
 		if (cantina[i]->numSentados > 0) {
-			for (j = 0; j < cantina[i]->numSentados; j++) {
+			for (int j = 0; j < cantina[i]->tamanho; j++) {
 				if (cantina[i]->sentados[j] != NULL) {
 					(cantina[i]->sentados[j]->duração)--;
 				}
@@ -248,7 +229,6 @@ void retiraEmergPessoa(mesa **cantina, pessoa**acabados, int tamAcabados, refeiç
 						adicionaVetorAcabados(acabados, cantina[i]->sentados[j], tamAcabados, r);//ver definição da função
 						(cantina[i]->numSentados)--;
 						cantina[i]->sentados[j] = NULL;
-						nullsNoFimCantina(cantina[i]->sentados, j, cantina[i]->tamanho);//mete os NULLs nas últimas posições da mesa
 						removeu = true;
 					}
 				}
@@ -257,13 +237,9 @@ void retiraEmergPessoa(mesa **cantina, pessoa**acabados, int tamAcabados, refeiç
 						adicionaVetorAcabados(acabados, cantina[i]->sentados[j], tamAcabados, r);
 						(cantina[i]->numSentados)--;
 						cantina[i]->sentados[j] = NULL;
-						nullsNoFimCantina(cantina[i]->sentados, j, cantina[i]->tamanho);//mete os NULLs nas últimas posições da mesa
 						removeu = true;
 					}
 				}
-			}
-			else {
-				j = cantina[i]->tamanho;
 			}
 		}
 	}
@@ -273,21 +249,19 @@ void retiraEmergPessoa(mesa **cantina, pessoa**acabados, int tamAcabados, refeiç
 }
 
 void retiraEmergGrupo(mesa **cantina, pessoa**acabados, int tamAcabados, refeição *r) {//função para os casos de emergência, neste caso retirar um grupo em caso de emergência
-	int n;
+	int n; 
 	int i = 0;
-	int j;
 	bool removeu = false;
 	cout << "Escolha um grupo para sair" << endl;
 	cin >> n;
-	for (i; i < cantina[0]->totalMesas; i++) {
-		for (j = 0; j < cantina[i]->tamanho; j++) {
+	for (i = 0; i < cantina[0]->totalMesas; i++) {
+		for (int j = 0; j < cantina[i]->tamanho; j++) {
 			if (cantina[i]->sentados[j] != NULL) {
 				if (cantina[i]->sentados[j]->numDepartamentoOuGrupo == n) {
 					adicionaVetorAcabados(acabados, cantina[i]->sentados[j], tamAcabados, r);//ver definição da função
 					(cantina[i]->numSentados)--;
 					cantina[i]->sentados[j] = NULL;
 					removeu = true;
-					nullsNoFimCantina(cantina[i]->sentados, j, cantina[i]->tamanho);//mete os NULLs nas últimas posições da mesa
 				}
 			}
 		}
@@ -310,7 +284,6 @@ void removeAcabados(mesa **cantina, pessoa** acabados, int tamAcabados, refeição
 				}
 			}
 		}
-		nullsNoFimCantina(cantina[i]->sentados, 0, cantina[i]->tamanho);
 	}
 }
 
@@ -326,7 +299,6 @@ void adicionaVetorAcabados(pessoa**acabados, pessoa*p, int tam, refeição*r) {//a
 
 void ordenaAlfabeticamenteUltNome(mesa**cantina, pessoa**fila, pessoa**acabados, int pessoasNaCantina, int pessoasNaFila, int pessoasAcabados) {//opção 1, ordena alfabeticamente todas as pessoas que passaram pelo sistema pelos seus últimos nomes
 	int total = pessoasNaCantina + pessoasNaFila + pessoasAcabados;//nº de pessoas no sistema
-	cout << pessoasNaCantina << "\t" << pessoasNaFila << "\t" << pessoasAcabados << endl;
 	pessoa**sistema = new pessoa*[total];
 	criaFila(sistema, total);
 	int i = 0;
@@ -334,9 +306,11 @@ void ordenaAlfabeticamenteUltNome(mesa**cantina, pessoa**fila, pessoa**acabados,
 	int y = 0;
 	while (i < total) {
 		for (int k = 0; k < cantina[0]->totalMesas; k++) {
-			for (int j = 0; j < cantina[k]->numSentados; j++) {//vai adicionar ao vetor que vai ser ordenado as pessoas da cantina
-				sistema[i] = cantina[k]->sentados[j];
-				i++;
+			for (int j = 0; j < cantina[k]->tamanho; j++) {//vai adicionar ao vetor que vai ser ordenado as pessoas da cantina
+				if (cantina[k]->sentados[j] != NULL) {
+					sistema[i] = cantina[k]->sentados[j];
+					i++;
+				}
 			}
 		}
 		while (x < pessoasNaFila) {//vai adicionar ao vetor que vai ser ordenado as pessoas da fila
@@ -352,8 +326,8 @@ void ordenaAlfabeticamenteUltNome(mesa**cantina, pessoa**fila, pessoa**acabados,
 	}
 	mergeSortAlfabeticamenteUltNome(sistema, total);//usa-se uma adaptação do mergeSort pois é um dos mais eficientes algoritmos de ordenação
 	system("CLS");
-	cout << "Pessoas que estiveram na fila, entraram na cantina e já saíram, ordenadas alfabeticamente pelo último nome:" << endl << endl;
-	escreveFila(sistema, total);
+	cout << "Pessoas que estão na fila, estão na cantina e que já terminaram a sua refeição, ordenadas alfabeticamente pelo último nome:" << endl << endl;
+	escreveOpções(sistema, total);
 }
 
 int contaPessoasCantina(mesa**cantina) {//conta as pessoas que estão na cantina, para ser usado no ordenaAlfabeticamenteUltNome
@@ -457,8 +431,8 @@ void removeSemDinheiro(pessoa**fila, refeição *r, int*pos, pessoa**removidos, in
 		if (fila[i] != NULL) {
 			if (fila[i]->membro_aluno.num > 0) {
 				if (fila[i]->plafond < r->custo) {
-					cout << "***** ATENÇÃO *****\nO aluno com o número " << fila[i]->membro_aluno.num << " não possui plafond suficiente. " << endl;
-					cout << "Deseja remover só a pessoa ou o seu grupo inteiro?\n1.Só a pessoa\n2.O grupo todo" << endl;
+					cout << "***** ATENÇÃO *****" << endl << "O aluno com o número " << fila[i]->membro_aluno.num << " não possui plafond suficiente para iniciar a refeição." << endl;
+					cout << "\t1.Remover aluno da entrada" << endl << "\t2.Remover grupo da entrada" << endl;
 					num = fila[i]->numDepartamentoOuGrupo;
 					háPessoa = true;
 					break;
@@ -466,8 +440,8 @@ void removeSemDinheiro(pessoa**fila, refeição *r, int*pos, pessoa**removidos, in
 			}
 			else {
 				if (fila[i]->plafond < r->custo) {
-					cout << "***** ATENÇÃO *****\nO elemento de staff com o número " << fila[i]->membro_staff.numFuncionario << " não possui plafond suficiente. " << endl;
-					cout << "Deseja remover só a pessoa ou o seu departamento inteiro?\n1.Só a pessoa\n2.O departamento todo" << endl;
+					cout << "***** ATENÇÃO *****\nO elemento de staff com o número " << fila[i]->membro_staff.numFuncionario << " não possui plafond suficiente para iniciar a refeição." << endl;
+					cout << "\t1.Remover funcionário da entrada" << endl << "\t2.Remover grupo da entrada" << endl;
 					háPessoa = true;
 					num = fila[i]->numDepartamentoOuGrupo;
 					break;
@@ -480,6 +454,7 @@ void removeSemDinheiro(pessoa**fila, refeição *r, int*pos, pessoa**removidos, in
 		}
 	}
 	if (háPessoa) {
+		cout << "**** Comando: ";
 		cin >> indiOuGrupo;
 		switch (indiOuGrupo)
 		{
@@ -544,118 +519,47 @@ void removeSemDinheiroGrupo(pessoa**fila, int*pos, pessoa**removidos, int tamRem
 	}
 }
 
-void mergeSortMesasNumSentados(mesa ** cantina, int tam) {
-	if (tam < 2) {
-		return;
+mesa** bubbleSortMesasNumSentados (mesa**cantina, int tam) {
+	bool trocaOcorreu = true;
+	mesa**aux = new mesa*[tam];
+	for (int a = 0; a < cantina[0]->totalMesas; a++) {
+		aux[a] = cantina[a];
 	}
-	int mid = tam / 2;
-	mesa **left = new mesa*[mid];
-	mesa**right = new mesa*[tam - mid];
-	for (int i = 0; i < mid; i++) {
-		left[i] = cantina[i];
-	}
-	for (int j = mid; j < tam; j++) {
-		right[j - mid] = cantina[j];
-	}
-	mergeSortMesasNumSentados(left, mid);
-	mergeSortMesasNumSentados(right, tam - mid);
-	mergeMesas(left, right, cantina, mid, tam - mid, tam);
-}
-
-void mergeMesas(mesa ** left, mesa ** right, mesa ** cantina, int n_left, int n_right, int tam) {
-	int i = 0;
-	int j = 0;
-	int k = 0;
-	while (i < n_left && j < n_right) {
-		if (left[i]->numSentados < right[j]->numSentados) {
-			cantina[k] = left[i];
-			i++;
+	for (int i = 0; i < tam - 1 && trocaOcorreu; i++)
+	{
+		trocaOcorreu = false;
+		for (int j = tam - 1; j > i; j--)
+		{
+			if (aux[j]->numSentados < aux[j - 1]->numSentados)
+			{
+				swap(aux[j], aux[j - 1]);
+				trocaOcorreu = true;
+			}
 		}
-		else {
-			cantina[k] = right[j];
-			j++;
-		}
-		k++;
 	}
-	while (i < n_left) {
-		cantina[k] = left[i];
-		k++;
-		i++;
-	}
-	while (j < n_right) {
-		cantina[k] = right[j];
-		j++;
-		k++;
-	}
-}
-
-void reverseOrdenação(mesa**cantina, int tam) {
-	if (tam < 2) {
-		return;
-	}
-	int mid = tam / 2;
-	mesa **left = new mesa*[mid];
-	mesa**right = new mesa*[tam - mid];
-	for (int i = 0; i < mid; i++) {
-		left[i] = cantina[i];
-	}
-	for (int j = mid; j < tam; j++) {
-		right[j - mid] = cantina[j];
-	}
-	reverseOrdenação(left, mid);
-	reverseOrdenação(right, tam - mid);
-	mergeReverseOrdenação(left, right, cantina, mid, tam - mid, tam);
-}
-
-void mergeReverseOrdenação(mesa ** left, mesa ** right, mesa ** cantina, int n_left, int n_right, int tam) {
-	int i = 0;
-	int j = 0;
-	int k = 0;
-	while (i < n_left && j < n_right) {
-		if (left[i]->numMesa < right[j]->numMesa) {
-			cantina[k] = left[i];
-			i++;
-		}
-		else {
-			cantina[k] = right[j];
-			j++;
-		}
-		k++;
-	}
-	while (i < n_left) {
-		cantina[k] = left[i];
-		k++;
-		i++;
-	}
-	while (j < n_right) {
-		cantina[k] = right[j];
-		j++;
-		k++;
-	}
+	return aux;
 }
 
 void vagasPossiveis(int*vagasPossiveis, pessoa*p, mesa**cantina, int k, int vagas) {
 	*vagasPossiveis = vagas;
 	string *cursoVagas = new string;
-	if (p != NULL) {
-		for (int a = k; a < cantina[0]->totalMesas; a++) {
-			if (cantina[a]->numSentados != 0) {
-				for (int l = 0; l < cantina[a]->tamanho; l++) {
-					if (cantina[a]->sentados[l] != NULL) {
-						if (cantina[a]->sentados[l]->membro_aluno.num > 0) {
-							*cursoVagas = cantina[a]->sentados[l]->membro_aluno.curso;
-							l = cantina[a]->tamanho;
-						}
-						else {
-							*cursoVagas = "nãoconta";
-						}
+	for (int a = k; a < cantina[0]->totalMesas; a++) {
+		if (cantina[a]->numSentados != 0) {
+			for (int l = 0; l < cantina[a]->tamanho; l++) {
+				if (cantina[a]->sentados[l] != NULL) {
+					if (cantina[a]->sentados[l]->membro_aluno.num > 0) {
+						*cursoVagas = cantina[a]->sentados[l]->membro_aluno.curso;
+						l = cantina[a]->tamanho;
+					}
+					else {
+						*cursoVagas = "nãoconta";
 					}
 				}
-				if (*cursoVagas != "nãoconta") {
-					if (p->membro_aluno.num > 0) {
-						if (p->membro_aluno.curso != *cursoVagas) {
-							*vagasPossiveis -= (cantina[a]->tamanho - cantina[a]->numSentados);
-						}
+			}
+			if (*cursoVagas != "nãoconta") {
+				if (p->membro_aluno.num > 0) {
+					if (p->membro_aluno.curso != *cursoVagas) {
+						*vagasPossiveis -= (cantina[a]->tamanho - cantina[a]->numSentados);
 					}
 				}
 			}

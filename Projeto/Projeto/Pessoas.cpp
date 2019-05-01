@@ -42,7 +42,8 @@ pessoa** criaGrupo(string *pnomes, string *unomes, string*cursos, int*reserva, i
 	if (*PROBESP > 15 && *PROBESP <= 20) {//no caso de se criar um aluno especial
 		int *RETIRAPNOME = new int(rand() % 44);
 		int *RETIRAUNOME = new int(rand() % 97);
-		float *PLAF = new float(rand() % 100 + 1);
+		float *PLAF = new float(rand() % 10000 + 1);
+		*PLAF /= 100;
 		pessoa *p = criaPessoa(pnomes[*RETIRAPNOME], unomes[*RETIRAUNOME], cursos[*RETIRACURSO], *DURAÇÃOMEAL, *GRUPOIDDEPART, *PLAF, true, true);
 		pessoa**l = new pessoa*[1];
 		p->tamanho = 1;
@@ -58,7 +59,8 @@ pessoa** criaGrupo(string *pnomes, string *unomes, string*cursos, int*reserva, i
 		for (i; i < *TAMANHO; i++) {
 			int *RETIRAPNOME = new int(rand() % 44);
 			int *RETIRAUNOME = new int(rand() % 97);
-			float *PLAF = new float(rand() % 100 + 1);
+			float *PLAF = new float(rand() % 10000 + 1);
+			*PLAF /= 100;
 			pessoa*p = criaPessoa(pnomes[*RETIRAPNOME], unomes[*RETIRAUNOME], cursos[*RETIRACURSO], *DURAÇÃOMEAL, *GRUPOIDDEPART, *PLAF, *ALUNOOUNAO, false);
 			p->tamanho = *TAMANHO - i;
 			l[i] = p;
@@ -77,14 +79,33 @@ void escrevePessoaFila(pessoa *p) {//como o nome indica escreve a pessoa que rec
 	else {
 		if (p->membro_aluno.num > 0) {
 			if (!p->membro_aluno.especialOuNao) {
-				cout << p->priNome << " " << p->ultNome << ", Estudante, Grupo " << p->numDepartamentoOuGrupo << ", " << p->membro_aluno.curso << ", " << p->membro_aluno.num << ", duração " << p->duração << ", " << p->plafond << "€" << endl;
+				cout << p->priNome  << ", Estudante, Grupo " << p->numDepartamentoOuGrupo << ", " << p->membro_aluno.curso << ", " << p->membro_aluno.num << ", duração " << p->duração << ", " << p->plafond << " EUR" << endl;
 			}
 			else {
-				cout << p->priNome << " " << p->ultNome << ", Estudante (especial), Grupo " << p->numDepartamentoOuGrupo << ", " << p->membro_aluno.curso << ", " << p->membro_aluno.num << ", duração " << p->duração << ", " << p->plafond << "€" << endl;
+				cout << p->priNome  << ", Estudante (especial), Grupo " << p->numDepartamentoOuGrupo << ", " << p->membro_aluno.curso << ", " << p->membro_aluno.num << ", duração " << p->duração << ", " << p->plafond << " EUR" << endl;
 			}
 		}
 		else {
-			cout << p->priNome << " " << p->ultNome << ", Staff, Departamento " << p->numDepartamentoOuGrupo << ", " << p->membro_staff.numFuncionario << ", duração " << p->duração << ", " << p->plafond << "€" << endl;
+			cout << p->priNome  << ", Staff, Departamento " << p->numDepartamentoOuGrupo << ", " << p->membro_staff.numFuncionario << ", duração " << p->duração << ", " << p->plafond << " EUR" << endl;
+		}
+	}
+}
+
+void escrevePessoaCompleta(pessoa *p) {//como o nome indica escreve a pessoa que recebe como argumento
+	if (p == NULL) {
+		cout << endl;
+	}
+	else {
+		if (p->membro_aluno.num > 0) {
+			if (!p->membro_aluno.especialOuNao) {
+				cout << p->priNome << " " << p->ultNome << ", Estudante, Grupo " << p->numDepartamentoOuGrupo << ", " << p->membro_aluno.curso << ", " << p->membro_aluno.num << ", duração " << p->duração << ", " << p->plafond << " EUR" << endl;
+			}
+			else {
+				cout << p->priNome << " " << p->ultNome << ", Estudante (especial), Grupo " << p->numDepartamentoOuGrupo << ", " << p->membro_aluno.curso << ", " << p->membro_aluno.num << ", duração " << p->duração << ", " << p->plafond << " EUR" << endl;
+			}
+		}
+		else {
+			cout << p->priNome << " " << p->ultNome << ", Staff, Departamento " << p->numDepartamentoOuGrupo << ", " << p->membro_staff.numFuncionario << ", duração " << p->duração << ", " << p->plafond << " EUR" << endl;
 		}
 	}
 }
@@ -96,14 +117,14 @@ void escrevePessoaCantina(pessoa *p) {//como o nome indica escreve a pessoa que 
 	else {
 		if (p->membro_aluno.num > 0) {
 			if (!p->membro_aluno.especialOuNao) {
-				cout << p->priNome << " " << p->ultNome << ", Estudante, Grupo " << p->numDepartamentoOuGrupo << ", " << p->membro_aluno.curso << ", " << p->membro_aluno.num << " (ciclos restantes: " << p->duração << ")" << endl;
+				cout <<"\t" << p->ultNome << ", Estudante, Grupo " << p->numDepartamentoOuGrupo << ", " << p->membro_aluno.curso << ", " << p->membro_aluno.num << " (ciclos restantes: " << p->duração << ")" << endl;
 			}
 			else {
-				cout << p->priNome << " " << p->ultNome << ", Estudante (especial), Grupo " << p->numDepartamentoOuGrupo << ", " << p->membro_aluno.curso << ", " << p->membro_aluno.num << " (ciclos restantes: " << p->duração << ")" << endl;
+				cout << "\t" << p->ultNome << ", Estudante (especial), Grupo " << p->numDepartamentoOuGrupo << ", " << p->membro_aluno.curso << ", " << p->membro_aluno.num << " (ciclos restantes: " << p->duração << ")" << endl;
 			}
 		}
 		else {
-			cout << p->priNome << " " << p->ultNome << ", Staff, Departamento " << p->numDepartamentoOuGrupo << ", " << p->membro_staff.numFuncionario << " (ciclos restantes: " << p->duração << ")" << endl;
+			cout << "\t" << p->ultNome << ", Staff, Departamento " << p->numDepartamentoOuGrupo << ", " << p->membro_staff.numFuncionario << " (ciclos restantes: " << p->duração << ")" << endl;
 		}
 	}
 }
@@ -145,9 +166,19 @@ void preencheFila(pessoa**fila, string* pnomes, string*unomes, string*cursos, in
 
 void escreveFila(pessoa**fila, int tam) {//como o nome indica escreve um vetor de pessoa*
 	int i = 0;
+	cout << endl << "FILA DE ESPERA:" << endl;
 	while (i < tam) {
 		cout << i + 1 << ". ";
 		escrevePessoaFila(fila[i]);
+		i++;
+	}
+}
+
+void escreveOpções(pessoa**v, int tam) {
+	int i = 0;
+	while (i < tam) {
+		cout << i + 1 << ". ";
+		escrevePessoaCompleta(v[i]);
 		i++;
 	}
 }
@@ -161,19 +192,19 @@ void alterarPlafond(pessoa**fila) {// opção 4, altera o plafond de uma pessoa na
 		if (fila[i] != NULL) {
 			if (fila[i]->membro_aluno.num > 0) {
 				if (fila[i]->membro_aluno.num == n) {
-					cout << "Plafond inicial: " << fila[i]->plafond << "€" << endl;
+					cout << "Plafond inicial: " << fila[i]->plafond << " EUR" << endl;
 					cout << "Insira um novo plafond: ";
 					cin >> fila[i]->plafond;
-					cout << "Plafond atual: " << fila[i]->plafond << "€" << endl;
+					cout << "Plafond atual: " << fila[i]->plafond << " EUR" << endl;
 					break;
 				}
 			}
 			else if (fila[i]->membro_staff.numFuncionario > 0) {
 				if (fila[i]->membro_staff.numFuncionario == n) {
-					cout << "Plafond inicial: " << fila[i]->plafond << "€" << endl;
+					cout << "Plafond inicial: " << fila[i]->plafond << " EUR" << endl;
 					cout << "Insira um novo plafond: ";
 					cin >> fila[i]->plafond;
-					cout << "Plafond atual: " << fila[i]->plafond << "€" << endl;
+					cout << "Plafond atual: " << fila[i]->plafond << " EUR" << endl;
 					break;
 				}
 			}
@@ -201,7 +232,7 @@ void procuraEspecial(pessoa**fila,int tam) {// vai percorrer a fila para ver se 
 			}
 		}
 		else {
-			break;
+			i = 50;
 		}
 	}
 }
@@ -226,7 +257,7 @@ void ordenaAlfabeticamentePriNome(pessoa ** removidos, int pessoasRemovidos){
 	mergeSortAlfabeticamentePriNome(removidos, pessoasRemovidos);//usa-se uma adaptação do mergeSort pois é um dos mais eficientes algoritmos de ordenação
 	system("CLS");
 	cout << "Pessoas que estiveram na fila, mas não tinham dinheiro suficiente e foram removidos, ordenadas pelo primeiro nome:" << endl << endl;
-	escreveFila(removidos, pessoasRemovidos);
+	escreveOpções(removidos, pessoasRemovidos);
 }
 
 int contaRemovidos(pessoa ** removidos){

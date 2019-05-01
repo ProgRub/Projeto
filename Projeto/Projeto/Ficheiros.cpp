@@ -188,7 +188,7 @@ void gravaCantina(mesa ** cantina){//grava a cantina de pessoas no ficheiro
 	if (file.is_open()) {
 		int tam = cantina[0]->totalMesas;
 		for (int i = 0; i < tam; i++) {
-			file << cantina[i]->numMesa << "\t" << cantina[i]->tamanho << endl;
+			file << cantina[i]->numMesa << "\t" << cantina[i]->tamanho << "\t" << cantina[i]->numSentados << endl;
 			int auxmesa = cantina[i]->tamanho;
 			for (int j = 0; j < auxmesa; j++) {
 				gravaPessoaCantina(cantina[i]->sentados[j]);
@@ -223,6 +223,9 @@ void carregaAluno(string PriNome, string UltNome, string EspecialouNao,string De
 	const char*aux4 = numAluFunc.c_str();
 	int numAluno = atoi(aux4);
 	p->membro_aluno.num = numAluno;
+	const char*aux5 = tamGrupo.c_str();
+	int tamanhoGrupo = atoi(aux5);
+	p->tamanho = tamanhoGrupo;
 	if (EspecialouNao == "Estudante Especial") {
 		p->membro_aluno.especialOuNao = true;
 	}
@@ -248,6 +251,9 @@ void carregaStaff(string PriNome, string UltNome, string DepGru, string numAluFu
 	const char*aux4 = numAluFunc.c_str();
 	int numFunc = atoi(aux4);
 	p->membro_staff.numFuncionario = numFunc;
+	const char*aux5 = tamGrupo.c_str();
+	int tamanhoGrupo = atoi(aux5);
+	p->tamanho = tamanhoGrupo;
 	p->membro_aluno.num = NULL;
 	p->membro_aluno.curso = "\0";
 	p->membro_aluno.especialOuNao = NULL;
@@ -410,10 +416,13 @@ mesa** carregaCantina(mesa ** canteen, int numMesas, int*reserva, int tamReserva
 					mesa*m = new mesa;
 					const char*aux1 = &aux[2];
 					int cap = atoi(aux1);
+					const char*aux2 = &aux[4];
+					int numSenta = atoi(aux2);
 					i++;
 					m->numMesa = i;
 					m->tamanho = cap;
-					int numSenta = 0;
+					m->numSentados = numSenta;
+					cout << m->numSentados << endl;
 					pessoa**sit = new pessoa*[cap];
 					for (int j = 0; j < cap; j++) {
 						pessoa*p = new pessoa;
@@ -448,7 +457,6 @@ mesa** carregaCantina(mesa ** canteen, int numMesas, int*reserva, int tamReserva
 								carregaStaff(*PriNome, *UltNome, *GrupoDep,* numAlunoFunc, *duração, *plafond,* tamGrupo, p, reserva,tamReserva);
 							}
 							sit[j] = p;
-							numSenta++;
 						}
 						else {
 							sit[j] = NULL;
@@ -462,19 +470,21 @@ mesa** carregaCantina(mesa ** canteen, int numMesas, int*reserva, int tamReserva
 						m->totalMesas = NULL;
 					}
 					m->sentados = sit;
-					m->numSentados = numSenta;
 					cantina[i - 1] = m;
 				}
 			}
 			else {
 				if (aux[2] == '\t') {//neste caso sabe-se que está numa linha com o número da mesa e a sua capacidade
 					mesa*m = new mesa;
-					const char*aux2 = &aux[3];
-					int cap = atoi(aux2);
+					const char*aux3 = &aux[3];
+					int cap = atoi(aux3);
+					const char*aux4 = &aux[5];
+					int numSenta = atoi(aux4);
 					i++;
 					m->numMesa = i;
 					m->tamanho = cap;
-					int numSenta = 0;
+					m->numSentados = numSenta;
+					cout << m->numSentados << endl;
 					pessoa**sit = new pessoa*[cap];
 					for (int j = 0; j < cap; j++) {
 						pessoa*p = new pessoa;
@@ -509,7 +519,6 @@ mesa** carregaCantina(mesa ** canteen, int numMesas, int*reserva, int tamReserva
 								carregaStaff(*PriNome, *UltNome, *GrupoDep, *numAlunoFunc, *duração, *plafond, *tamGrupo, p, reserva, tamReserva);
 							}
 							sit[j] = p;
-							numSenta++;
 						}
 						else {
 							sit[j] = NULL;
@@ -517,7 +526,6 @@ mesa** carregaCantina(mesa ** canteen, int numMesas, int*reserva, int tamReserva
 						delete PriNome, UltNome, GrupoDep, numAlunoFunc, duração, plafond, tamGrupo, AlunoouNao, Curso;
 					}
 					m->totalMesas = NULL;
-					m->numSentados = numSenta;
 					m->sentados = sit;
 					cantina[i - 1] = m;
 				}

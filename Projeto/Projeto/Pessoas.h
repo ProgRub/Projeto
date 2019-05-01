@@ -27,10 +27,12 @@ struct pessoa
 pessoa* criaPessoa(string pnome, string unome, string curso, int dura, int idOuDepart, float plafond, bool alunoOuNao, bool especialOuNao);
 pessoa** criaGrupo(string *pnomes, string *unomes, string*cursos, int*reserva, int tamRes);
 void escrevePessoaFila(pessoa *p);
+void escrevePessoaCompleta(pessoa *p);
 void escrevePessoaCantina(pessoa *p);
 void criaFila(pessoa**fila, int tam);
 void preencheFila(pessoa**fila, string* pnomes, string*unomes, string*cursos, int *pos, int*reserva, int tamRes);
 void escreveFila(pessoa**fila, int tam);
+void escreveOpções(pessoa**v, int tam);
 void alterarPlafond(pessoa**fila);
 void procuraEspecial(pessoa**fila, int tam);
 void testaGrupoDep(int*num, int*reserva, int tam);
