@@ -118,6 +118,7 @@
     <ClInclude Include="Ficheiros.h" />
     <ClInclude Include="Mesas.h" />
     <ClInclude Include="Pessoas.h" />
+    <ClInclude Include="Refeição.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
@@ -125,6 +126,7 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Mesas.cpp" />
     <ClCompile Include="Pessoas.cpp" />
+    <ClCompile Include="Refeição.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Projeto.rc" />

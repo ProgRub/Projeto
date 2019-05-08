@@ -4,6 +4,7 @@
 #include "Ficheiros.h"
 #include"Pessoas.h"
 #include"Mesas.h"
+#include "Refeição.h"
 using namespace std;
 
 void guardaFicheiros(string* Lista, string nome_ficheiro) {//vai ler um ficheiro com nome "nome_ficheiro" e guardar as linhas que lê no array Lista fornecida nos argumentos
@@ -34,7 +35,7 @@ int numLinhas(string nome_ficheiro) {//vai contar o nº de linhas de um ficheiro 
 		return -1;
 	}
 }
-
+/*
 int* copiaVetor(int* aux, int tamanho) {// esta função evitará a existência de arrays com espaços vazios
 	int *vetor = new int[tamanho];
 	for (int*i = new int(0); *i < tamanho; (*i)++) {
@@ -50,7 +51,7 @@ void criaVetor(int*res, int tamanho) {//cria o vetor que vai guardar os números 
 	}
 }
 
-void gravaPessoaFila(pessoa * p){//vai gravar uma pessoa da fila no ficheiro. Cada dado fica numa linha individual para ser mais fácil o carregamento do ficheiro
+void gravaPessoaFila(pessoa * p) {//vai gravar uma pessoa da fila no ficheiro. Cada dado fica numa linha individual para ser mais fácil o carregamento do ficheiro
 	fstream ficheiro("Fila da cantina.txt", ios::out | ios::app);
 	if (ficheiro.is_open()) {
 		if (p == NULL) {
@@ -128,7 +129,7 @@ void gravaPessoaCantina(pessoa * p) {//vai gravar uma pessoa da cantina no fiche
 		else {
 			if (p->membro_aluno.num > 0) {
 				if (!p->membro_aluno.especialOuNao) {
-					ficheiro << p->priNome << endl << p->ultNome << endl << "Estudante" << endl << p->numDepartamentoOuGrupo << endl << p->membro_aluno.curso << endl << to_string (p->membro_aluno.num) << endl << p->duração << endl << p->plafond << endl << p->tamanho << endl;
+					ficheiro << p->priNome << endl << p->ultNome << endl << "Estudante" << endl << p->numDepartamentoOuGrupo << endl << p->membro_aluno.curso << endl << to_string(p->membro_aluno.num) << endl << p->duração << endl << p->plafond << endl << p->tamanho << endl;
 				}
 				else {
 					ficheiro << p->priNome << endl << p->ultNome << endl << "Estudante Especial" << endl << p->numDepartamentoOuGrupo << endl << p->membro_aluno.curso << endl << to_string(p->membro_aluno.num) << endl << p->duração << endl << p->plafond << endl << p->tamanho << endl;
@@ -142,8 +143,8 @@ void gravaPessoaCantina(pessoa * p) {//vai gravar uma pessoa da cantina no fiche
 	ficheiro.close();
 }
 
-void gravaFila(pessoa ** fila, int tam){//grava a fila de pessoas no ficheiro
-	fstream ficheiro("Fila da cantina.txt", ios::out); 
+void gravaFila(pessoa ** fila, int tam) {//grava a fila de pessoas no ficheiro
+	fstream ficheiro("Fila da cantina.txt", ios::out);
 	if (ficheiro.is_open()) {
 		int i = 0;
 		while (i < tam) {
@@ -178,7 +179,7 @@ void gravaRemovidos(pessoa ** removidos, int tam) {//grava as pessoas que foram 
 	ficheiro.close();
 }
 
-void gravaCantina(mesa ** cantina){//grava a cantina de pessoas no ficheiro
+void gravaCantina(mesa ** cantina) {//grava a cantina de pessoas no ficheiro
 	fstream ficheiro("Cantina.txt", ios::out);
 	if (ficheiro.is_open()) {
 		ficheiro << "\0";//limpa o ficheiro
@@ -198,15 +199,15 @@ void gravaCantina(mesa ** cantina){//grava a cantina de pessoas no ficheiro
 	file.close();
 }
 
-void gravaRefeição(refeição * r){//guarda a refeição da cantina num ficheiro
+void gravaRefeição(refeição * r) {//guarda a refeição da cantina num ficheiro
 	fstream ficheiro("Refeição da cantina.txt", ios::out);
 	if (ficheiro.is_open()) {
-		ficheiro << "Refeição atual:" << endl << r->entrada << endl<< r->pratoMain << endl << r->custo << "€" << endl;
+		ficheiro << "Refeição atual:" << endl << r->entrada << endl << r->pratoMain << endl << r->custo << "€" << endl;
 	}
 	ficheiro.close();
 }
 
-void carregaAluno(string PriNome, string UltNome, string EspecialouNao,string DepGru, string Curso, string numAluFunc, string duracao, string plaf, string tamGrupo, pessoa*p, int*reserva, int tamReserva){//vai carregar um aluno de um ficheiro
+void carregaAluno(string PriNome, string UltNome, string EspecialouNao, string DepGru, string Curso, string numAluFunc, string duracao, string plaf, string tamGrupo, pessoa*p, int*reserva, int tamReserva) {//vai carregar um aluno de um ficheiro
 	p->priNome = PriNome;
 	p->ultNome = UltNome;
 	const char*aux1 = DepGru.c_str();//transforma o string em *char
@@ -214,8 +215,8 @@ void carregaAluno(string PriNome, string UltNome, string EspecialouNao,string De
 	adicionaReservaNum(reserva, numDepGru, tamReserva);
 	p->numDepartamentoOuGrupo = numDepGru;
 	const char*aux2 = plaf.c_str();
-	float plafond = atof(aux2);
-	p->plafond = plafond;//transforma o *char em float
+	float plafond = atof(aux2);//transforma o *char em float
+	p->plafond = plafond;
 	const char*aux3 = duracao.c_str();
 	int dura = atoi(aux3);
 	p->duração = dura;
@@ -239,7 +240,7 @@ void carregaStaff(string PriNome, string UltNome, string DepGru, string numAluFu
 	p->priNome = PriNome;
 	p->ultNome = UltNome;
 	const char*aux1 = DepGru.c_str();
-	int numDepGru =atoi(aux1);
+	int numDepGru = atoi(aux1);
 	p->numDepartamentoOuGrupo = numDepGru;
 	adicionaReservaNum(reserva, numDepGru, tamReserva);
 	const char*aux2 = plaf.c_str();
@@ -265,7 +266,7 @@ void carregaFila(pessoa ** fila, int tam, int*pos, int*reserva, int tamReserva) 
 		*pos = 0;
 		for (int j = 0; j < tam; j++) {
 			pessoa*p = new pessoa;
-			string *PriNome=new string;
+			string *PriNome = new string;
 			string *UltNome = new string;
 			string *AlunoouNao = new string;
 			string *GrupoDep = new string;
@@ -285,7 +286,7 @@ void carregaFila(pessoa ** fila, int tam, int*pos, int*reserva, int tamReserva) 
 					getline(ficheiro, *duração);
 					getline(ficheiro, *plafond);
 					getline(ficheiro, *tamGrupo);
-					carregaAluno(*PriNome,* UltNome, *AlunoouNao, *GrupoDep, *Curso, *numAlunoFunc, *duração, *plafond, *tamGrupo, p, reserva,tamReserva);
+					carregaAluno(*PriNome, *UltNome, *AlunoouNao, *GrupoDep, *Curso, *numAlunoFunc, *duração, *plafond, *tamGrupo, p, reserva, tamReserva);
 				}
 				else {
 					getline(ficheiro, *GrupoDep);
@@ -402,14 +403,14 @@ void carregaRemovidos(pessoa ** removidos, int tam, int*reserva, int tamReserva)
 	ficheiro.close();
 }
 
-mesa** carregaCantina(mesa ** canteen, int numMesas, int*reserva, int tamReserva){//carrega uma cantina do ficheiro
-	fstream ficheiro("Cantina.txt", ios::in); 
+mesa** carregaCantina(mesa ** canteen, int numMesas, int*reserva, int tamReserva) {//carrega uma cantina do ficheiro
+	fstream ficheiro("Cantina.txt", ios::in);
 	delete canteen;
 	mesa**cantina = new mesa*[contaCantina()];
 	int i = 0;
 	if (ficheiro.is_open()) {
 		string testa;
-		while(getline(ficheiro,testa)) {
+		while (getline(ficheiro, testa)) {
 			const char*aux = testa.c_str();
 			if (i < 9) {
 				if (aux[1] == '\t') {//neste caso sabe-se que está numa linha com o número da mesa e a sua capacidade
@@ -445,15 +446,15 @@ mesa** carregaCantina(mesa ** canteen, int numMesas, int*reserva, int tamReserva
 								getline(ficheiro, *duração);
 								getline(ficheiro, *plafond);
 								getline(ficheiro, *tamGrupo);
-								carregaAluno(*PriNome, *UltNome, *AlunoouNao ,*GrupoDep, *Curso, *numAlunoFunc, *duração, *plafond, *tamGrupo, p, reserva, tamReserva);
+								carregaAluno(*PriNome, *UltNome, *AlunoouNao, *GrupoDep, *Curso, *numAlunoFunc, *duração, *plafond, *tamGrupo, p, reserva, tamReserva);
 							}
-							else{
+							else {
 								getline(ficheiro, *GrupoDep);
 								getline(ficheiro, *numAlunoFunc);
 								getline(ficheiro, *duração);
-								getline(ficheiro,* plafond);
+								getline(ficheiro, *plafond);
 								getline(ficheiro, *tamGrupo);
-								carregaStaff(*PriNome, *UltNome, *GrupoDep,* numAlunoFunc, *duração, *plafond,* tamGrupo, p, reserva,tamReserva);
+								carregaStaff(*PriNome, *UltNome, *GrupoDep, *numAlunoFunc, *duração, *plafond, *tamGrupo, p, reserva, tamReserva);
 							}
 							sit[j] = p;
 						}
@@ -534,18 +535,18 @@ mesa** carregaCantina(mesa ** canteen, int numMesas, int*reserva, int tamReserva
 	return cantina;
 }
 
-void carregaRefeição(refeição * r){//carrega uma refeição do ficheiro
+void carregaRefeição(refeição * r) {//carrega uma refeição do ficheiro
 	fstream ficheiro("Refeição da cantina.txt", ios::in);
 	if (ficheiro.is_open()) {
-		string *discarda=new string;
+		string *discarda = new string;
 		getline(ficheiro, *discarda);
-		string *entrada=new string;
+		string *entrada = new string;
 		getline(ficheiro, *entrada);
 		r->entrada = *entrada;
-		string *pratoPrincipal= new string;
+		string *pratoPrincipal = new string;
 		getline(ficheiro, *pratoPrincipal);
 		r->pratoMain = *pratoPrincipal;
-		string *aux= new string;
+		string *aux = new string;
 		getline(ficheiro, *aux, '€');
 		const char*aux2 = (*aux).c_str();
 		float custo = atof(aux2);
@@ -559,9 +560,9 @@ int contaCantina() {//conta o número de mesas na cantina guardada no ficheiro
 	int numMesas = 0;
 	if (ficheiro.is_open()) {
 		string aux;
-		while (getline(ficheiro, aux)) {			
+		while (getline(ficheiro, aux)) {
 			const char*aux2 = aux.c_str();
-			if (aux2[1]=='\t' || aux2[2]=='\t') {
+			if (aux2[1] == '\t' || aux2[2] == '\t') {
 				numMesas++;
 			}
 		}
@@ -580,4 +581,4 @@ void adicionaReservaNum(int*reserva, int num, int tam) {//adiciona um número à r
 			p = tam;
 		}
 	}
-}
+}*/

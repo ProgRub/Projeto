@@ -2,10 +2,11 @@
 #include <string>
 #include"Pessoas.h"
 #include"Mesas.h"
+#include "Refeição.h"
 using namespace std;
 
 void guardaFicheiros(string* Lista, string nome);
-int numLinhas(string nome_ficheiro);
+int numLinhas(string nome_ficheiro);/*
 int* copiaVetor(int* aux, int tamanho);
 void criaVetor(int*res, int tamanho);
 void gravaPessoaFila(pessoa * p);
@@ -25,4 +26,4 @@ void carregaRemovidos(pessoa ** removidos, int tam, int*reserva, int tamReserva)
 mesa** carregaCantina(mesa**canteen, int numMesas, int*reserva, int tamReserva);
 void carregaRefeição(refeição*r);
 int contaCantina();
-void adicionaReservaNum(int*reserva, int num, int tam);
+void adicionaReservaNum(int*reserva, int num, int tam); */
