@@ -1,7 +1,4 @@
 #pragma once
-#include"Mesas.h"
-#include"Pessoas.h"
-#include"Ficheiros.h"
 #include<iostream>
 #include<locale>
 #include<string>
@@ -19,7 +16,8 @@ struct LLRefeições {
 	refeição*primeira;
 };
 
-void novaMeal(LLRefeições *pratos, bool primeiraVez);
+void novaMeal(LLRefeições *pratos);
 bool listaVaziaRefeições(LLRefeições*ll);
 void insereFimRefeições(LLRefeições* ll, LLRefeições::refeição *r);
 void escreveMeal(LLRefeições*ll);
+void escreveTodasRefeições(LLRefeições*ll);

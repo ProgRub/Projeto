@@ -1,7 +1,6 @@
 #pragma once
 #include <string>
 #include "Pessoas.h"
-#include "Refeição.h"
 using namespace std;
 
 struct LLMesas {
@@ -22,25 +21,21 @@ bool listaVaziaCantina(LLMesas*ll);
 void insereFimMesas(LLMesas* ll, LLMesas::mesa *m);
 void criaCantina(LLMesas*ll);
 void escreveCantina(LLMesas*ll);
-void inserePessoasMesa(LLMesas::mesa*m, LLPessoas*fila);
-void preencheCantina(LLMesas *cantina, LLPessoas*fila, LLRefeições*r, LLPessoas*removidos);/*
-void removeDuração(mesa **cantina);
-void retiraEmergPessoa(mesa **cantina, pessoa**removidos, int tamAcabados, refeição *r);
-void retiraEmergGrupo(mesa **cantina, pessoa**removidos, int tamAcabados, refeição *r);
-void removeDuração(mesa **cantina);
-void removeAcabados(mesa **cantina, pessoa** removidos, int tamAcabados, refeição*r);
-void adicionaVetorAcabados(pessoa**removidos, pessoa*p, int tam, refeição*r);
-void ordenaAlfabeticamenteUltNome(mesa**cantina, pessoa**fila, pessoa**acabados, int pessoasNaCantina, int pessoasNaFila, int pessoasAcabados);
-int contaPessoasCantina(mesa**cantina);
-int contaPessoasFila(pessoa**fila);
-int contaAcabados(pessoa**acabados);
-void mergeSortAlfabeticamenteUltNome(pessoa**sistema, int tam);
-void mergeUltNome(pessoa**left, pessoa**right, pessoa**sistema, int n_left, int n_right, int tam);
-void adicionaVetorRemovidos(pessoa**removidos, pessoa*p, int tam);*/
-void removeSemDinheiro(LLPessoas*fila, LLRefeições *r, LLPessoas*removidos);
-void removeSemDinheiroPessoa(LLPessoas*fila, LLPessoas*removidos, int posiPessoa, int numDepGrupo);
-void removeSemDinheiroGrupo(LLPessoas*fila, LLPessoas*removidos, int numDepGrupo);/*
-void vagasPossiveis(int*vagasPossiveis, pessoa*p, mesa**cantina, int k, int vagas);
-void mudaNome(mesa**cantina, pessoa**fila, int tamFila);
-void editaDuração(mesa** cantina, pessoa**fila, int tamFila);
-void retiraTodaAGenteCantina(mesa**cantina);*/
+void preencheCantina(LLMesas *cantina, LLPessoas*fila, LLRefeições*r);
+void removeDuração(LLMesas*cantina);
+void retiraEmergPessoa(LLMesas*cantina, LLPessoas*acabados, LLRefeições *r);
+void retiraEmergGrupo(LLMesas*cantina, LLPessoas*acabados, LLRefeições *r);
+void removeAcabados(LLMesas*cantina, LLPessoas* acabados, LLRefeições*r);
+void insereFimPessoasAcabadas(LLPessoas* ll, LLPessoas::pessoa *p, LLRefeições*r);
+void ordenaAlfabeticamenteUltNome(LLMesas*cantina, LLPessoas*fila, LLPessoas*acabados);
+int contaPessoasCantina(LLMesas*cantina);
+void vagasPossiveis(int*vagasPossiveis, LLPessoas::pessoa*p, LLMesas*cantina, int vagas);
+void mudaNome(LLMesas*cantina, LLPessoas*fila);
+void editaDuração(LLMesas* cantina, LLPessoas*fila);
+LLMesas::mesa** converteLLvetorMesas(LLMesas*cantina);
+void SelectionSortMesasNumSentados(LLMesas::mesa**cantina, int tam);
+void apresentaIndividuo(LLMesas*cantina, LLPessoas*fila);
+void apresentaCursoOuDep(LLMesas*cantina, LLPessoas*fila, string *CURSOS);
+void mudaCurso(LLMesas*cantina, LLPessoas*fila, string* CURSOS);
+void PobreRicoEMedia(LLMesas*cantina, LLPessoas*fila);
+void lotaria(LLMesas*cantina, LLPessoas*fila, bool *háVencedor, int*premio, int*aumenta);

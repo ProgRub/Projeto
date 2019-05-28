@@ -1,29 +1,23 @@
 #pragma once
 #include <string>
-#include"Pessoas.h"
+#include"Refeição.h"
 #include"Mesas.h"
-#include "Refeição.h"
+#include"Pessoas.h"
 using namespace std;
 
 void guardaFicheiros(string* Lista, string nome);
-int numLinhas(string nome_ficheiro);/*
-int* copiaVetor(int* aux, int tamanho);
-void criaVetor(int*res, int tamanho);
-void gravaPessoaFila(pessoa * p);
-void gravaPessoaAcabados(pessoa * p);
-void gravaPessoaRemovidos(pessoa * p);
-void gravaPessoaCantina(pessoa * p);
-void gravaFila(pessoa**fila, int tam);
-void gravaAcabados(pessoa ** acabados, int tam);
-void gravaRemovidos(pessoa ** removidos, int tam);
-void gravaCantina(mesa**cantina);
-void gravaRefeição(refeição*r);
-void carregaAluno(string PriNome, string UltNome, string EspecialouNao, string DepGru, string Curso, string numAluFunc, string duracao, string plaf, string tamGrupo, pessoa*p, int*reserva, int tamReserva);
-void carregaStaff(string PriNome, string UltNome, string DepGru, string numAluFunc, string duracao, string plaf, string tamGrupo, pessoa*p, int*reserva, int tamReserva);
-void carregaFila(pessoa**fila, int tam, int*pos, int*reserva, int tamReserva);
-void carregaAcabados(pessoa ** acabados, int tam, int*reserva, int tamReserva);
-void carregaRemovidos(pessoa ** removidos, int tam, int*reserva, int tamReserva);
-mesa** carregaCantina(mesa**canteen, int numMesas, int*reserva, int tamReserva);
-void carregaRefeição(refeição*r);
-int contaCantina();
-void adicionaReservaNum(int*reserva, int num, int tam); */
+int numLinhas(string nome_ficheiro);
+void limpaLLPessoas(LLPessoas*ll);
+void gravaPessoaRemovidos(LLPessoas::pessoa * p);
+void gravaLLPessoas(LLPessoas * ll, const char*NomeDoFicheiro);
+void gravaRefeicoes(LLRefeições * ref);
+void gravaCantina(LLMesas* cantina);
+void gravaRemovidos(nóRemovidos* raiz);
+void carregaPessoa(string PriNome, string UltNome, string AlunoOuNao, string DepGru, string Curso, string numAluFunc, string duracao, string plaf, string tamGrupo, LLPessoas::pessoa*p, LLReserva*reserva);
+void carregaLLPessoas(LLPessoas* fila, LLReserva*reserva, const char*NomeDoFicheiro);
+nóRemovidos* carregaRemovidos(nóRemovidos* arvoreRemovidos, LLReserva*reserva, const char*NomeDoFicheiro);
+void limpaCantina(LLMesas*cantina);
+void carregaCantina(LLMesas* cantina, int numMesas, LLReserva*reserva, const char*NomeDoFicheiro);
+void limpaRefeições(LLRefeições*r);
+void carregaRefeições(LLRefeições * r, const char*NomeDoFicheiro);
+int contaCantina(const char*NomeDoFicheiro);
